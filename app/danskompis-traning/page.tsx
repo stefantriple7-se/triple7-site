@@ -9,10 +9,13 @@ const renderImage = (src: string, alt: string, caption: string) => {
         flexDirection: "column",
         alignItems: "center",
         gap: "0.75rem",
+        flex: "0 1 160px",             // ← ger en "kortbredd" som kan wrappas
+        maxWidth: "180px",             // maxbredd per kort
       }}
     >
       <div
         style={{
+          width: "100%",
           borderRadius: "1.5rem",
           border: "1px solid #e2e8f0",
           backgroundColor: "#f8fafc",
@@ -27,10 +30,9 @@ const renderImage = (src: string, alt: string, caption: string) => {
           src={src}
           alt={alt}
           style={{
-            width: "180px",
-            maxWidth: "100%",
-            height: "auto",
             display: "block",
+            width: "100%",          // ← fyll figuren
+            height: "auto",
           }}
         />
       </div>
@@ -39,7 +41,6 @@ const renderImage = (src: string, alt: string, caption: string) => {
           fontSize: "0.75rem",
           color: "#64748b",
           textAlign: "center",
-          maxWidth: "220px",
         }}
       >
         {caption}
@@ -112,12 +113,13 @@ export default function DanskompisTrainingPage() {
             Danskompis Träning – Spotify-powered interval workouts
           </p>
 
-          <div
+         <div
             style={{
               marginTop: "2rem",
-              display: "grid",
-              gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-              gap: "2rem",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: "1.5rem",
             }}
           >
             {renderImage(
