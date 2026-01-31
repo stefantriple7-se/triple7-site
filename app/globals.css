@@ -248,3 +248,85 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 860px) {
   .grid { grid-template-columns: 1fr; }
 }
+
+.projects {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.sectionSubtitle {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: #9ca3af; 
+}
+
+.cardText {
+  font-size: 0.9rem;
+  color: #e5e7eb;
+}
+
+.cardMeta {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #f9fafb;
+}
+
+.cardMetaSmall {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-bottom: 0.75rem;
+}
+
+.projectThumb {
+  margin-bottom: 0.75rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: radial-gradient(circle at top, #1e293b, #020617);
+}
+
+.projectThumbImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.projectScreens {
+  margin-top: 8px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;          
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.projectScreen {
+  flex: 0 0 auto;           
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.35); 
+  background: radial-gradient(circle at top, #1e293b, #020617);
+  padding: 4px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
+}
+
+.projectScreenImage {
+  display: block;
+  width: 90px;               
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+@media (max-width: 480px) {
+  .projectScreenImage {
+    width: 80px;
+  }
+}
