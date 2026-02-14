@@ -14,9 +14,60 @@ const projects = [
       "/danskompis-traning/playlists.jpeg",
       "/danskompis-traning/playing.jpeg",
     ],
+    thumbRatio: 9 / 16, // portrait
   },
- 
+
+  {
+    href: "/satelliteattack",
+    title: "Satellite Attack",
+    role: "Creator & developer",
+    description:
+      "A fast-paced arcade space survival game. Tribute to the classic Satellite Attack on the Philips Videopac G7000.",
+    meta: "Android · Unity · C# · Arcade",
+    images: [
+      "/satelliteattack/splash.jpg",
+      "/satelliteattack/gameplay.jpg",
+      "/satelliteattack/localhighscore.jpg",
+    ],
+    thumbRatio: 2048 / 945, // landscape
+    storeHref:
+      "https://play.google.com/store/apps/details?id=se.triple7.satelliteattack&hl=en",
+  },
 ];
+
+function ProjectThumb({ src, alt, ratio }: { src: string; alt: string; ratio: number }) {
+  const isLandscape = ratio > 1;
+
+  // Bigger thumbnails, but controlled:
+  // Portrait: slightly narrower; Landscape: wider (otherwise it looks tiny/flat)
+  const width = isLandscape ? "clamp(210px, 28vw, 360px)" : "clamp(140px, 18vw, 210px)";
+
+  return (
+    <div
+      className="projectScreen"
+      style={{
+        width,
+        aspectRatio: String(ratio),
+        position: "relative",
+        overflow: "hidden",
+        borderRadius: "16px",
+        border: "1px solid rgba(226,232,240,1)",
+        background: "rgba(248,250,252,1)",
+        boxShadow: "0 10px 20px rgba(15,23,42,0.08)",
+        flex: "0 0 auto",
+      }}
+    >
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(max-width: 640px) 70vw, (max-width: 1024px) 38vw, 360px"
+        style={{ objectFit: "cover" }}
+        className="projectScreenImage"
+      />
+    </div>
+  );
+}
 
 export default function Home() {
   return (
@@ -58,25 +109,29 @@ export default function Home() {
       <section className="projects">
         <h2 className="sectionTitle">Selected projects</h2>
         <p className="sectionSubtitle">
-          A few examples of apps and digital products built under the
-          Triple7 Studios brand.
+          A few examples of apps and digital products built under the Triple7 Studios brand.
         </p>
 
         <div className="mt-6 space-y-4">
           {projects.map((project) => (
             <article className="card" key={project.href}>
               {project.images && project.images.length > 0 && (
-                <div className="projectScreens">
+                <div
+                  className="projectScreens"
+                  style={{
+                    display: "flex",
+                    gap: "12px",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                  }}
+                >
                   {project.images.map((src, idx) => (
-                    <div className="projectScreen" key={src}>
-                      <Image
-                        src={src}
-                        alt={`${project.title} – screenshot ${idx + 1}`}
-                        width={90}
-                        height={180}
-                        className="projectScreenImage"
-                      />
-                    </div>
+                    <ProjectThumb
+                      key={src}
+                      src={src}
+                      ratio={project.thumbRatio ?? 1}
+                      alt={`${project.title} – screenshot ${idx + 1}`}
+                    />
                   ))}
                 </div>
               )}
@@ -89,13 +144,43 @@ export default function Home() {
                   <br />
                   {project.description}
                 </p>
+
                 <p className="cardMetaSmall">{project.meta}</p>
-                <p className="cardLinkWrap">
+
+                <p
+                  className="cardLinkWrap"
+                  style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}
+                >
                   <Link href={project.href} className="link">
                     View project
                   </Link>
+
+                  {project.storeHref && (
+                    <a
+                      className="link"
+                      href={project.storeHref}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Install on Google Play
+                    </a>
+                  )}
                 </p>
               </div>
+
+              {/* Mobile: if wrapping looks tight, you can uncomment this to allow horizontal scroll instead */}
+              {/* 
+              <style jsx>{`
+                @media (max-width: 640px) {
+                  .projectScreens {
+                    flex-wrap: nowrap !important;
+                    overflow-x: auto;
+                    padding-bottom: 6px;
+                    -webkit-overflow-scrolling: touch;
+                  }
+                }
+              `}</style>
+              */}
             </article>
           ))}
         </div>
