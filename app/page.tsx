@@ -167,20 +167,6 @@ export default function Home() {
                   )}
                 </p>
               </div>
-
-              {/* Mobile: if wrapping looks tight, you can uncomment this to allow horizontal scroll instead */}
-              {/* 
-              <style jsx>{`
-                @media (max-width: 640px) {
-                  .projectScreens {
-                    flex-wrap: nowrap !important;
-                    overflow-x: auto;
-                    padding-bottom: 6px;
-                    -webkit-overflow-scrolling: touch;
-                  }
-                }
-              `}</style>
-              */}
             </article>
           ))}
         </div>
@@ -207,17 +193,14 @@ export default function Home() {
         </article>
 
         <article className="card">
-          <div className="cardTitle">Status</div>
-          <div className="cardBody">In development</div>
+          <div className="cardTitle">Latest status</div>
+          <div className="cardBody">Satellite Attack 1.1 live on Android and soon on iOS</div>
         </article>
       </section>
 
       <footer className="footer">
         <span>© {new Date().getFullYear()} Triple7 Studios</span>
-        <span className="dot">•</span>
-        <a className="footerLink" href="/privacy">
-          Privacy
-        </a>
+       
       </footer>
     </main>
   );
