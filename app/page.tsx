@@ -3,6 +3,37 @@ import Link from "next/link";
 
 const projects = [
   {
+    href: "/wisplight",
+    title: "Wisplight",
+    role: "Co-developer · AR ghost hunt & in-app UX",
+    description:
+      "An outdoor ghost hunt in augmented reality. Follow the Spirit Radar through your streets, find glowing ghosts through the camera and catch them with the Spook-Vac.",
+    meta: "iOS & Android · Unity · AR Foundation · Firebase",
+    images: [
+      "/wisplight/screens/1.jpg",
+      "/wisplight/screens/2.jpg",
+      "/wisplight/screens/3.jpg",
+    ],
+    thumbRatio: 9 / 16, // portrait
+    storeHref: "https://play.google.com/store/apps/details?id=se.bluedeer.ghosthunt",
+  },
+
+  {
+    href: "/gamelings",
+    title: "Gamelings",
+    role: "Creator & developer",
+    description:
+      "Five party games in one app: Imposter Hunt, Skitgubbe, Yatzy, Sink the Fleet and Four in a Row. Pass one phone around, play on several phones joined by a QR code, or take on the computer.",
+    meta: "Android & iOS · React Native · TypeScript · Coming soon",
+    images: [
+      "/gamelings/screens/1.jpg",
+      "/gamelings/screens/2.jpg",
+      "/gamelings/screens/3.jpg",
+    ],
+    thumbRatio: 9 / 16, // portrait
+  },
+
+  {
     href: "/danskompis-traning",
     title: "Danskompis – Träning",
     role: "Creator & developer",

@@ -1,0 +1,278 @@
+/* The Wisplight showcase page: the site's dark look, with Wisplight's colours
+   (night blue, teal glow, brass and amber, from wisplight.se). */
+.page {
+  --night: #070e1b;
+  --surface: #10192a;
+  --line: #303d55;
+  --parchment: #f4ecdb;
+  --muted-w: #bdb3a2;
+  --teal: #77e8db;
+  --amber: #f9be73;
+  --brass: #d2ac66;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 22px 20px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.back {
+  color: var(--muted);
+  font-size: 14px;
+}
+.back:hover {
+  color: var(--text);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 28px;
+  align-items: center;
+  padding: 28px;
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(520px 300px at 8% 0%, rgba(119, 232, 219, 0.22), transparent 60%),
+    radial-gradient(480px 300px at 100% 100%, rgba(249, 190, 115, 0.16), transparent 60%),
+    linear-gradient(180deg, #0d1a33, var(--night));
+}
+.icon {
+  border-radius: 26px;
+  box-shadow: 0 0 0 1px rgba(210, 172, 102, 0.5), 0 14px 34px rgba(119, 232, 219, 0.18);
+}
+.kicker {
+  display: inline-flex;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--muted-w);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.title {
+  margin: 10px 0 0;
+  color: var(--parchment);
+  font-size: clamp(42px, 7vw, 62px);
+  font-weight: 400;
+  line-height: 1;
+  text-shadow: 0 0 28px rgba(119, 232, 219, 0.45);
+}
+.tagline {
+  margin: 8px 0 0;
+  color: var(--amber);
+  font-size: 22px;
+  font-style: italic;
+}
+.lede {
+  margin: 14px 0 0;
+  max-width: 40rem;
+  color: var(--parchment);
+  font-size: 17px;
+  line-height: 1.55;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.live {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #10b981;
+}
+.role {
+  margin: 16px 0 0;
+  color: var(--muted-w);
+  font-size: 14px;
+}
+@media (max-width: 640px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 22px;
+  }
+  .icon {
+    width: 88px;
+    height: 88px;
+  }
+}
+
+.sectionTitle {
+  margin: 0;
+  color: #e5e7eb;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.sectionSubtitle {
+  margin: 6px 0 16px;
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+.screens {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 4px 2px 16px;
+}
+.screen {
+  flex: 0 0 auto;
+  width: clamp(170px, 22vw, 220px);
+  scroll-snap-align: start;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
+}
+.screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.grid4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+}
+.panel {
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(16, 25, 42, 0.7);
+}
+.step {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-bottom: 8px;
+  border-radius: 999px;
+  background: var(--teal);
+  color: var(--night);
+  font-size: 14px;
+  font-weight: 800;
+}
+.cardTitle {
+  color: #f9fafb;
+  font-size: 15px;
+  font-weight: 700;
+}
+.cardText {
+  margin: 4px 0 0;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.ghost {
+  text-align: center;
+  background:
+    radial-gradient(160px 140px at 50% 38%, rgba(119, 232, 219, 0.16), transparent 70%),
+    rgba(16, 25, 42, 0.7);
+}
+.ghost img {
+  display: block;
+  width: 128px;
+  height: 128px;
+  margin: 0 auto 8px;
+}
+.rarity {
+  display: inline-block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.kit {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.kit img {
+  flex: 0 0 auto;
+  width: 64px;
+  height: 64px;
+}
+
+.list {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0 0;
+  padding-left: 1.1em;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  list-style: disc;
+}
+
+.stores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+.storeBadge {
+  display: inline-flex;
+  align-items: center;
+  height: 54px;
+}
+/* A plain button rather than a copy of Apple's badge artwork. */
+.storeButton {
+  display: inline-flex;
+  align-items: center;
+  height: 54px;
+  padding: 0 20px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--parchment);
+  font-size: 16px;
+  font-weight: 700;
+}
+.storeButton:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-top: 16px;
+  font-size: 0.9rem;
+}
+.link {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer {
+  color: var(--muted);
+  font-size: 13px;
+}

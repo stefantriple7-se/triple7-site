@@ -1,0 +1,181 @@
+/* Gamelings' own colours (from the app), for its privacy and terms pages. */
+.root {
+  --bg: #1a1036;
+  --bg-deep: #0f0824;
+  --surface-2: rgba(255, 255, 255, 0.14);
+  --fg: #ffffff;
+  --muted: rgba(255, 255, 255, 0.72);
+  --line: rgba(255, 255, 255, 0.16);
+  --accent: #ffd23f;
+  --link: #8fd3ff;
+  color-scheme: dark;
+  min-height: 100vh;
+  padding: 28px 20px 56px;
+  color: var(--fg);
+  background: var(--bg-deep) linear-gradient(180deg, #2b1466 0, var(--bg) 420px, var(--bg-deep) 100%) no-repeat;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.root main,
+.top,
+.footer {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.root a {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.root a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.root .brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--fg);
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1;
+}
+.brand img {
+  border-radius: 10px;
+}
+.nav {
+  display: flex;
+  gap: 16px;
+  font-size: 15px;
+}
+.root .nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.root .nav a[aria-current] {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.langs {
+  gap: 10px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+}
+@media (max-width: 640px) {
+  .brand {
+    order: 1;
+  }
+  .langs {
+    order: 2;
+    margin-left: auto;
+  }
+  .pages {
+    order: 3;
+    flex-basis: 100%;
+  }
+}
+
+.hero {
+  display: grid;
+  gap: 14px;
+  padding-block: 40px 16px;
+}
+.root h1 {
+  margin: 0;
+  font-size: clamp(32px, 6.5vw, 46px);
+  font-weight: 900;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.lede {
+  max-width: 38rem;
+  font-size: 19px;
+}
+.root .lede {
+  margin: 0;
+}
+.root h2 {
+  margin: 40px 0 8px;
+  color: var(--accent);
+  font-size: 20px;
+  font-weight: 800;
+}
+.root p {
+  margin: 0 0 12px;
+}
+.root ul {
+  display: grid;
+  gap: 6px;
+  margin: 0 0 12px;
+  padding-left: 1.2em;
+  list-style: disc;
+}
+.root .note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  margin: 8px 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.root table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.root th,
+.root td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+.root th {
+  background: var(--surface-2);
+  font-weight: 800;
+}
+.root tr:last-child td {
+  border-bottom: 0;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin-top: 48px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 14px;
+}
+.root .footer a {
+  color: var(--muted);
+}
+.root .company {
+  flex-basis: 100%;
+  order: 1;
+  margin: 0;
+  font-size: 13px;
+}
+
+.email {
+  overflow-wrap: anywhere;
+}
