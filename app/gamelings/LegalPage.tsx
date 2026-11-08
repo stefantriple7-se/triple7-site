@@ -14,6 +14,7 @@ export type LegalKind = "privacy" | "terms";
 
 const TEXT = {
   en: {
+    byline: "Gamelings · A Triple7 Studios game, published by Bluedeer IT AB",
     pages: "Gamelings pages",
     languages: "Language",
     privacy: "Privacy",
@@ -22,6 +23,7 @@ const TEXT = {
       "Bluedeer IT AB · Olle Edfeldts väg 8, 243 93 Höör, Sweden · Org. no. 559337-9562 · VAT no. SE559337956201",
   },
   sv: {
+    byline: "Gamelings · Ett spel från Triple7 Studios, utgivet av Bluedeer IT AB",
     pages: "Gamelings sidor",
     languages: "Språk",
     privacy: "Integritet",
@@ -106,7 +108,7 @@ export function LegalPage({
       <main>{children}</main>
 
       <footer className={s.footer}>
-        <span>Gamelings · Bluedeer IT AB</span>
+        <span>{t.byline}</span>
         <p className={s.company}>{t.company}</p>
         <Link href={legalPath(lang, "privacy")}>{t.privacy}</Link>
         <Link href={legalPath(lang, "terms")}>{t.terms}</Link>

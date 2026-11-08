@@ -13,12 +13,12 @@ export default function GamelingsTermsSvPage() {
     <LegalPage lang="sv" kind="terms">
       <div className={s.hero}>
         <h1>Gamelings användarvillkor</h1>
-        <p className={s.note}>Senast uppdaterade: 6 november 2026</p>
+        <p className={s.note}>Senast uppdaterade: 8 november 2026</p>
         <p className={s.lede}>Det här är reglerna för att spela Gamelings. Vi har hållit dem korta och tydliga. När du spelar godkänner du dem.</p>
       </div>
 
       <h2>Vilka vi är</h2>
-      <p>Gamelings görs av Bluedeer IT AB, Olle Edfeldts väg 8, 243 93 Höör (org.nr 559337-9562, momsreg.nr SE559337956201). Frågor: <Email />.</p>
+      <p>Gamelings görs av Triple7 Studios och ges ut av Bluedeer IT AB, Olle Edfeldts väg 8, 243 93 Höör (org.nr 559337-9562, momsreg.nr SE559337956201). Villkoren är ett avtal mellan dig och Bluedeer IT AB (”vi”). Frågor: <Email />.</p>
 
       <h2>Vem kan spela</h2>
       <p>Gamelings är till för spelare från 13 år. Är du under 18, fråga en förälder eller vårdnadshavare innan du köper något. Yngre barn är välkomna att spela med sin familj.</p>

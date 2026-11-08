@@ -13,12 +13,12 @@ export default function GamelingsPrivacySvPage() {
     <LegalPage lang="sv" kind="privacy">
       <div className={s.hero}>
         <h1>Gamelings integritetspolicy</h1>
-        <p className={s.note}>Senast uppdaterad: 6 november 2026</p>
+        <p className={s.note}>Senast uppdaterad: 8 november 2026</p>
         <p className={s.lede}>Gamelings har inga konton och ingen reklam, och inget spårar dig. Spelarna du lägger till, dina poäng och dina inställningar stannar i din telefon. Bara två saker lämnar den: spelmeddelanden när du spelar på flera telefoner, och köp.</p>
       </div>
 
       <h2>Vilka vi är</h2>
-      <p>Gamelings görs av Bluedeer IT AB, Olle Edfeldts väg 8, 243 93 Höör (org.nr 559337-9562, momsreg.nr SE559337956201). Vi bestämmer hur dina uppgifter används och är därför personuppgiftsansvariga enligt EU:s dataskyddsförordning (GDPR). Frågor: <Email />.</p>
+      <p>Gamelings görs av Triple7 Studios och ges ut av Bluedeer IT AB, Olle Edfeldts väg 8, 243 93 Höör (org.nr 559337-9562, momsreg.nr SE559337956201). Bluedeer IT AB bestämmer hur dina uppgifter används och är därför personuppgiftsansvarig enligt EU:s dataskyddsförordning (GDPR). ”Vi” i den här policyn betyder Bluedeer IT AB. Frågor: <Email />.</p>
 
       <h2>Det som stannar i din telefon</h2>
       <ul>
