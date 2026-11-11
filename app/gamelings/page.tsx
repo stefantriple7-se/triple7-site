@@ -265,8 +265,8 @@ export default function GamelingsPage() {
               Svenska
             </Link>
           </span>
-          <a className={s.link} href="mailto:support@bluedeer.se">
-            support@bluedeer.se
+          <a className={s.link} href="mailto:contact@triple7.se">
+            contact@triple7.se
           </a>
         </div>
       </section>

@@ -13,7 +13,7 @@ export default function GamelingsPrivacySvPage() {
     <LegalPage lang="sv" kind="privacy">
       <div className={s.hero}>
         <h1>Gamelings integritetspolicy</h1>
-        <p className={s.note}>Senast uppdaterad: 8 november 2026</p>
+        <p className={s.note}>Senast uppdaterad: 11 november 2026</p>
         <p className={s.lede}>Gamelings har inga konton och ingen reklam, och inget spårar dig. Spelarna du lägger till, dina poäng och dina inställningar stannar i din telefon. Bara två saker lämnar den: spelmeddelanden när du spelar på flera telefoner, och köp.</p>
       </div>
 

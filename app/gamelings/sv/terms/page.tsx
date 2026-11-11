@@ -13,7 +13,7 @@ export default function GamelingsTermsSvPage() {
     <LegalPage lang="sv" kind="terms">
       <div className={s.hero}>
         <h1>Gamelings användarvillkor</h1>
-        <p className={s.note}>Senast uppdaterade: 8 november 2026</p>
+        <p className={s.note}>Senast uppdaterade: 11 november 2026</p>
         <p className={s.lede}>Det här är reglerna för att spela Gamelings. Vi har hållit dem korta och tydliga. När du spelar godkänner du dem.</p>
       </div>
 

@@ -47,8 +47,8 @@ export const legalAlternates = (lang: Lang, kind: LegalKind) => ({
 
 export function Email() {
   return (
-    <a className={s.email} href="mailto:support@bluedeer.se">
-      support@bluedeer.se
+    <a className={s.email} href="mailto:contact@triple7.se">
+      contact@triple7.se
     </a>
   );
 }

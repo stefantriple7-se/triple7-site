@@ -13,7 +13,7 @@ export default function GamelingsPrivacyPage() {
     <LegalPage lang="en" kind="privacy">
       <div className={s.hero}>
         <h1>Gamelings privacy policy</h1>
-        <p className={s.note}>Last updated: 8 November 2026</p>
+        <p className={s.note}>Last updated: 11 November 2026</p>
         <p className={s.lede}>Gamelings has no accounts and no ads, and nothing tracks you. The players you add, your scores and your settings stay on your phone. Only two things ever leave it: game messages when you play on several phones, and purchases.</p>
       </div>
 

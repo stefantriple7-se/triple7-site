@@ -13,7 +13,7 @@ export default function GamelingsTermsPage() {
     <LegalPage lang="en" kind="terms">
       <div className={s.hero}>
         <h1>Gamelings terms of use</h1>
-        <p className={s.note}>Last updated: 8 November 2026</p>
+        <p className={s.note}>Last updated: 11 November 2026</p>
         <p className={s.lede}>These are the rules for playing Gamelings. We have kept them short and plain. By playing, you agree to them.</p>
       </div>
 
