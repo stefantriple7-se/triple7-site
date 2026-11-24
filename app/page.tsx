@@ -24,13 +24,30 @@ const projects = [
     role: "Creator & developer",
     description:
       "Five party games in one app: Imposter Hunt, Skitgubbe, Yatzy, Sink the Fleet and Four in a Row. Pass one phone around, play on several phones joined by a QR code, or take on the computer.",
-    meta: "Android & iOS · React Native · TypeScript · Coming soon",
+    meta: "Android & iOS · React Native · TypeScript",
     images: [
       "/gamelings/screens/1.jpg",
       "/gamelings/screens/2.jpg",
       "/gamelings/screens/3.jpg",
     ],
     thumbRatio: 9 / 16, // portrait
+    storeHref: "https://play.google.com/store/apps/details?id=se.bluedeer.gamelings",
+    appStoreHref: "https://apps.apple.com/app/id6833083920",
+  },
+
+  {
+    href: "/fridgebuddy",
+    title: "FridgeBuddy",
+    role: "Creator & developer",
+    description:
+      "Keep track of what's in your fridge and eat it before it goes off. Sorted by best-before date, with a daily reminder, barcode and date scanning, a shopping list and food waste statistics.",
+    meta: "Android · Kotlin · Jetpack Compose · Coming soon",
+    images: [
+      "/fridgebuddy/screens/fridge.jpg",
+      "/fridgebuddy/screens/date-kalles.jpg",
+      "/fridgebuddy/screens/widget.jpg",
+    ],
+    thumbRatio: 540 / 1202, // portrait, a tall phone
   },
 
   {
@@ -196,6 +213,17 @@ export default function Home() {
                       Install on Google Play
                     </a>
                   )}
+
+                  {project.appStoreHref && (
+                    <a
+                      className="link"
+                      href={project.appStoreHref}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Download on the App Store
+                    </a>
+                  )}
                 </p>
               </div>
             </article>
@@ -225,7 +253,7 @@ export default function Home() {
 
         <article className="card">
           <div className="cardTitle">Latest status</div>
-          <div className="cardBody">Satellite Attack 1.1 live on Android and soon on iOS</div>
+          <div className="cardBody">Gamelings 1.1 live on Google Play and the App Store</div>
         </article>
       </section>
 

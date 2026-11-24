@@ -85,6 +85,43 @@
   font-weight: 600;
   white-space: nowrap;
 }
+a.chip:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+.live {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #22c55e;
+}
+.stores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 14px;
+}
+.storeBadge {
+  display: inline-flex;
+  align-items: center;
+  height: 54px;
+}
+/* A plain button rather than a copy of Apple's badge artwork. */
+.storeButton {
+  display: inline-flex;
+  align-items: center;
+  height: 54px;
+  padding: 0 20px;
+  border-radius: 12px;
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 700;
+}
+.storeButton:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
 .soon {
   width: 8px;
   height: 8px;

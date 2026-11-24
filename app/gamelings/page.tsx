@@ -9,6 +9,9 @@ import s from "./gamelings.module.css";
 
 const nunito = Nunito({ subsets: ["latin"], weight: ["900"] });
 
+const APP_STORE = "https://apps.apple.com/app/id6833083920";
+const GOOGLE_PLAY = "https://play.google.com/store/apps/details?id=se.bluedeer.gamelings";
+
 export const metadata: Metadata = {
   title: "Gamelings – Triple7 Studios",
   description:
@@ -130,15 +133,15 @@ export default function GamelingsPage() {
             take on the computer. No ads, no account.
           </p>
           <div className={s.chips}>
-            <span className={s.chip}>
-              <span className={s.soon} />
-              Google Play — coming soon
-            </span>
-            <span className={s.chip}>
-              <span className={s.soon} />
-              App Store — coming soon
-            </span>
-            <span className={s.chip}>Version 1.0</span>
+            <a className={s.chip} href={GOOGLE_PLAY} target="_blank" rel="noreferrer">
+              <span className={s.live} />
+              Google Play
+            </a>
+            <a className={s.chip} href={APP_STORE} target="_blank" rel="noreferrer">
+              <span className={s.live} />
+              App Store
+            </a>
+            <span className={s.chip}>Version 1.1</span>
             <span className={s.chip}>React Native · TypeScript</span>
           </div>
         </div>
@@ -242,10 +245,18 @@ export default function GamelingsPage() {
       </section>
 
       <section>
-        <h2 className={s.sectionTitle}>Availability</h2>
+        <h2 className={s.sectionTitle}>Get Gamelings</h2>
         <p className={s.sectionSubtitle}>
-          Coming soon to Google Play and the App Store, published by Bluedeer IT AB.
+          On Google Play and the App Store, published by Bluedeer IT AB.
         </p>
+        <div className={s.stores}>
+          <a className={s.storeBadge} href={GOOGLE_PLAY} target="_blank" rel="noreferrer">
+            <Image src="/googleplay.png" alt="Get it on Google Play" width={182} height={54} />
+          </a>
+          <a className={s.storeButton} href={APP_STORE} target="_blank" rel="noreferrer">
+            Download on the App Store
+          </a>
+        </div>
         <div className={s.links}>
           <span>
             <Link className={s.link} href="/gamelings/privacy">
