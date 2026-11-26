@@ -44,7 +44,7 @@ const projects = [
     meta: "Android · Kotlin · Jetpack Compose",
     images: [
       "/fridgebuddy/screens/fridge.jpg",
-      "/fridgebuddy/screens/date-kalles.jpg",
+      "/fridgebuddy/screens/date.jpg",
       "/fridgebuddy/screens/widget.jpg",
     ],
     thumbRatio: 540 / 1202, // portrait, a tall phone

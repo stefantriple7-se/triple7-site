@@ -5,9 +5,10 @@ import s from "./fridgebuddy.module.css";
 
 const GOOGLE_PLAY = "https://play.google.com/store/apps/details?id=se.triple7.fridgebuddy";
 
-// The screenshots come from the debug app: most on a Pixel 8 Pro emulator with demo data
-// (540x1202 after scaling), the date scans on a Galaxy S24 with real packages (status bar
-// cropped off, 540x1115).
+// The screenshots come from version 1.2: most on a Pixel 8 Pro emulator with demo data
+// (540x1202 after scaling), the barcode and date scans on a Galaxy S24 with a real package
+// (status bar cropped off, 540x1115), and the reminder from the emulator's notification shade,
+// cut off below FridgeBuddy's notifications (540x721).
 
 export const metadata: Metadata = {
   title: "FridgeBuddy – Triple7 Studios",
@@ -17,38 +18,51 @@ export const metadata: Metadata = {
 
 const EMULATOR = { width: 540, height: 1202 };
 const PHONE = { width: 540, height: 1115 };
+const SHADE = { width: 540, height: 721 };
 
 const SCREENS = [
-  { file: "fridge.jpg", ...EMULATOR, alt: "The fridge, sorted into past best before, eat soon and later" },
-  { file: "barcode.jpg", ...EMULATOR, alt: "Adding milk: the name filled in from Open Food Facts after a barcode scan" },
-  { file: "date-kalles.jpg", ...PHONE, alt: "Scanning a dot-matrix best-before date on a tube: Friday, October 15, 2027" },
-  { file: "date-milk.jpg", ...PHONE, alt: "Scanning the date stamped on a milk carton: today" },
-  { file: "widget.jpg", ...EMULATOR, alt: "The Eat soon widget on the home screen" },
-  { file: "shopping.jpg", ...EMULATOR, alt: "The shopping list, with what's already in the basket" },
+  { file: "fridge.jpg", ...EMULATOR, alt: "The fridge: past date, eat soon and later, each sorted by category" },
+  { file: "barcode.jpg", ...PHONE, alt: "Adding a soured milk after a barcode scan: name and category from Open Food Facts, best before in 3 days" },
+  { file: "date.jpg", ...PHONE, alt: "Scanning the dot-matrix best-before date on a carton: Sunday, November 29, 2026" },
+  { file: "reminder.jpg", ...SHADE, alt: "The morning reminder, one notification per product, with Eaten, Thrown away and +2 days" },
+  { file: "freezer.jpg", ...EMULATOR, alt: "Chicken put in the freezer: the date becomes a reminder three months ahead" },
+  { file: "advice.jpg", ...EMULATOR, alt: "Advice for cheese past its best-before date, from the Swedish Food Agency" },
+  { file: "shopping.jpg", ...EMULATOR, alt: "The shopping list in shop order: fruit and veg, bread, dairy, pantry, household" },
   { file: "stats.jpg", ...EMULATOR, alt: "Food waste statistics for the last 30 days and 8 weeks" },
-  { file: "settings.jpg", ...EMULATOR, alt: "Settings: reminders, language, colour themes and light or dark" },
+  { file: "widget.jpg", ...EMULATOR, alt: "The Eat soon widget on the home screen" },
+  { file: "settings.jpg", ...EMULATOR, alt: "Settings: reminders, language, colour themes, light or dark, and sharing" },
 ];
 
 const FEATURES = [
   {
     icon: "🗓️",
-    title: "Sorted by date",
-    text: "Past best before, eat soon and later, at a glance. Swipe right when you've eaten something, left when it was thrown away.",
+    title: "Sorted by date or category",
+    text: "Past date, eat soon and later, at a glance. Swipe right when you've eaten something, left when it was thrown away, one at a time when you have several.",
   },
   {
     icon: "📷",
     title: "Scan instead of typing",
-    text: "Scan the barcode to get the name, and point the camera at the best-before date to read it, even when it's printed in dots.",
+    text: "Scan the barcode for the name and category, and point the camera at the date to read it, even when it's printed in dots. Best before or use by, it tells them apart.",
   },
   {
     icon: "🔔",
-    title: "A daily reminder",
-    text: "One notification, at the time you choose, when something should be eaten today or tomorrow.",
+    title: "Reminders with buttons",
+    text: "One notification per product, at the time you choose, when it should be eaten today or tomorrow. Mark it eaten or thrown away, or give it two more days, right there.",
+  },
+  {
+    icon: "❄️",
+    title: "Opened or in the freezer",
+    text: "In the freezer the date becomes a reminder, a month to a year ahead. Food without a date, like leftovers or bread, gets a suggested one.",
+  },
+  {
+    icon: "💡",
+    title: "Advice when the date has passed",
+    text: "What to do with that kind of food: how to check meat, when mould can be cut away, how long leftovers keep. It follows the Swedish Food Agency's advice.",
   },
   {
     icon: "🛒",
-    title: "Shopping list",
-    text: "Ate the last of the milk? Add it to the shopping list with one tap, and tick things off in the shop.",
+    title: "Shopping list in shop order",
+    text: "Ate the last of the milk? Add it with one tap. The list follows the order of the shop, and can be shared as text, CSV or PDF.",
   },
   {
     icon: "📊",

@@ -124,6 +124,8 @@ a.chip:hover {
 
 .screens {
   display: flex;
+  /* The reminder is shorter than the phone screens: don't stretch its frame to theirs. */
+  align-items: flex-start;
   gap: 14px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
