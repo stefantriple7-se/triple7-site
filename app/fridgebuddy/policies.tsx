@@ -9,9 +9,11 @@ import s from "./legal.module.css";
 // - barcode numbers go to Open Food Facts;
 // - shared names, and from 1.1 categories and use-by, live in Firestore (the "(default)" database in eur3: Belgium and the
 //   Netherlands), with Firebase anonymous auth;
-// - Premium is a Google Play one-time purchase, checked on the phone.
+// - Premium is a Google Play one-time purchase, checked on the phone;
+// - 1.2: whether a product is opened or frozen stays on the phone, and the app may ask Google Play
+//   to show its in-app rating sheet (Play handles the rating; the app learns nothing).
 
-const UPDATED = "2026-11-25";
+const UPDATED = "2026-11-26";
 
 function Email() {
   return (
@@ -55,7 +57,7 @@ const TEXT: Record<Lang, PolicyText> = {
       "FridgeBuddy has no accounts, no ads and no tracking. What’s in your fridge stays on your phone.",
     languages: "Language",
     byline: "FridgeBuddy · An app from Triple7 Studios, published by Bluedeer IT AB",
-    updated: "Last updated: 25 November 2026",
+    updated: "Last updated: 26 November 2026",
     lede: "FridgeBuddy has no accounts and no ads, and nothing tracks you. What’s in your fridge stays on your phone. Only barcode numbers leave it, to look up product names, and what you choose to share with other users: names and categories.",
     who: [
       "Who we are",
@@ -69,7 +71,7 @@ const TEXT: Record<Lang, PolicyText> = {
     phone: [
       "What stays on your phone",
       [
-        "Your products, their best-before dates and quantities.",
+        "Your products, their best-before dates and quantities, and whether they’re opened or in the freezer.",
         "Your history and statistics: what you ate and what you threw away.",
         "Your shopping list.",
         "The names you gave scanned barcodes, and the categories and kinds of date you chose.",
@@ -103,15 +105,15 @@ const TEXT: Record<Lang, PolicyText> = {
       "This data is stored with Google Firebase on servers in the EU (Belgium and the Netherlands). The anonymous sign-in is handled by Firebase Authentication, which Google may also process in the USA. Shared names and categories are kept as long as they are useful to others.",
     ],
     purchases: [
-      "Purchases",
-      "FridgeBuddy Premium is a one-time purchase through Google Play, which handles the payment; we never see your card details. The app only receives Google Play’s confirmation that unlocks Premium.",
+      "Purchases and ratings",
+      "FridgeBuddy Premium is a one-time purchase through Google Play, which handles the payment; we never see your card details. The app only receives Google Play’s confirmation that unlocks Premium. From version 1.2 the app now and then asks Google Play to show its own rating sheet. If you rate FridgeBuddy there, Google Play handles it; the app never learns whether or how you rated it.",
     ],
     helpers: [
       "Who helps us run the app",
       ["Company", "What they do for us", "Where"],
       [
         ["Google (Firebase)", "Stores shared names and categories and handles the anonymous sign-in", "EU; the sign-in also the USA"],
-        ["Google (Play services, ML Kit, Google Play)", "Reading barcodes and text on the phone, and purchases", "Google’s own privacy policy applies"],
+        ["Google (Play services, ML Kit, Google Play)", "Reading barcodes and text on the phone, purchases and ratings", "Google’s own privacy policy applies"],
         ["Open Food Facts", "Product names for barcodes", "France"],
       ],
       "When data goes to the USA, it is protected by the EU–US Data Privacy Framework or the EU’s standard contractual clauses.",
@@ -151,7 +153,7 @@ const TEXT: Record<Lang, PolicyText> = {
       "FridgeBuddy har inga konton, ingen reklam och ingen spårning. Det som finns i ditt kylskåp stannar i din telefon.",
     languages: "Språk",
     byline: "FridgeBuddy · En app från Triple7 Studios, utgiven av Bluedeer IT AB",
-    updated: "Senast uppdaterad: 25 november 2026",
+    updated: "Senast uppdaterad: 26 november 2026",
     lede: "FridgeBuddy har inga konton och ingen reklam, och ingenting spårar dig. Det som finns i ditt kylskåp stannar i din telefon. Bara streckkodsnummer lämnar den, för att hitta varunamn, och det du väljer att dela med andra användare: namn och kategorier.",
     who: [
       "Vilka vi är",
@@ -165,7 +167,7 @@ const TEXT: Record<Lang, PolicyText> = {
     phone: [
       "Det här stannar i din telefon",
       [
-        "Dina varor, deras bäst före-datum och antal.",
+        "Dina varor, deras bäst före-datum och antal, och om de är öppnade eller ligger i frysen.",
         "Din historik och statistik: vad du ätit och vad du slängt.",
         "Din inköpslista.",
         "Namnen du gett skannade streckkoder, och kategorierna och datumtyperna du valt.",
@@ -199,15 +201,15 @@ const TEXT: Record<Lang, PolicyText> = {
       "Den här datan lagras hos Google Firebase på servrar i EU (Belgien och Nederländerna). Den anonyma inloggningen sköts av Firebase Authentication, som Google även kan behandla i USA. Delade namn och kategorier sparas så länge de är till nytta för andra.",
     ],
     purchases: [
-      "Köp",
-      "FridgeBuddy Premium är ett engångsköp via Google Play, som sköter betalningen; vi ser aldrig dina kortuppgifter. Appen får bara Google Plays bekräftelse som låser upp Premium.",
+      "Köp och betyg",
+      "FridgeBuddy Premium är ett engångsköp via Google Play, som sköter betalningen; vi ser aldrig dina kortuppgifter. Appen får bara Google Plays bekräftelse som låser upp Premium. Från version 1.2 ber appen ibland Google Play att visa sin egen betygsruta. Om du betygsätter FridgeBuddy där sköter Google Play det; appen får aldrig veta om eller hur du betygsatt den.",
     ],
     helpers: [
       "Vilka som hjälper oss att driva appen",
       ["Företag", "Vad de gör åt oss", "Var"],
       [
         ["Google (Firebase)", "Lagrar delade namn och kategorier och sköter den anonyma inloggningen", "EU; inloggningen även USA"],
-        ["Google (Play-tjänster, ML Kit, Google Play)", "Läser streckkoder och text i telefonen, och köpen", "Googles egen integritetspolicy gäller"],
+        ["Google (Play-tjänster, ML Kit, Google Play)", "Läser streckkoder och text i telefonen, köpen och betygen", "Googles egen integritetspolicy gäller"],
         ["Open Food Facts", "Varunamn utifrån streckkoder", "Frankrike"],
       ],
       "När data går till USA skyddas den av EU–US Data Privacy Framework eller EU:s standardavtalsklausuler.",
@@ -247,7 +249,7 @@ const TEXT: Record<Lang, PolicyText> = {
       "FridgeBuddy hat keine Konten, keine Werbung und kein Tracking. Was in deinem Kühlschrank ist, bleibt auf deinem Handy.",
     languages: "Sprache",
     byline: "FridgeBuddy · Eine App von Triple7 Studios, herausgegeben von Bluedeer IT AB",
-    updated: "Zuletzt aktualisiert: 25. November 2026",
+    updated: "Zuletzt aktualisiert: 26. November 2026",
     lede: "FridgeBuddy hat keine Konten und keine Werbung, und nichts verfolgt dich. Was in deinem Kühlschrank ist, bleibt auf deinem Handy. Nur Strichcodenummern verlassen es, um Produktnamen nachzuschlagen, und was du mit anderen Nutzern teilen möchtest: Namen und Kategorien.",
     who: [
       "Wer wir sind",
@@ -261,7 +263,7 @@ const TEXT: Record<Lang, PolicyText> = {
     phone: [
       "Was auf deinem Handy bleibt",
       [
-        "Deine Produkte, ihre Mindesthaltbarkeitsdaten und Mengen.",
+        "Deine Produkte, ihre Mindesthaltbarkeitsdaten und Mengen, und ob sie geöffnet oder eingefroren sind.",
         "Dein Verlauf und deine Statistik: was du gegessen und was du weggeworfen hast.",
         "Deine Einkaufsliste.",
         "Die Namen, die du gescannten Strichcodes gegeben hast, und die gewählten Kategorien und Datumsarten.",
@@ -296,15 +298,15 @@ const TEXT: Record<Lang, PolicyText> = {
       "Diese Daten werden bei Google Firebase auf Servern in der EU (Belgien und Niederlande) gespeichert. Die anonyme Anmeldung übernimmt Firebase Authentication, das Google auch in den USA verarbeiten kann. Geteilte Namen und Kategorien werden aufbewahrt, solange sie anderen nützen.",
     ],
     purchases: [
-      "Käufe",
-      "FridgeBuddy Premium ist ein einmaliger Kauf über Google Play, das die Zahlung abwickelt; deine Kartendaten sehen wir nie. Die App erhält nur die Bestätigung von Google Play, die Premium freischaltet.",
+      "Käufe und Bewertungen",
+      "FridgeBuddy Premium ist ein einmaliger Kauf über Google Play, das die Zahlung abwickelt; deine Kartendaten sehen wir nie. Die App erhält nur die Bestätigung von Google Play, die Premium freischaltet. Ab Version 1.2 bittet die App Google Play ab und zu, sein eigenes Bewertungsfenster zu zeigen. Bewertest du FridgeBuddy dort, übernimmt das Google Play; die App erfährt nie, ob oder wie du bewertet hast.",
     ],
     helpers: [
       "Wer uns beim Betrieb der App hilft",
       ["Unternehmen", "Was sie für uns tun", "Wo"],
       [
         ["Google (Firebase)", "Speichert geteilte Namen und Kategorien und übernimmt die anonyme Anmeldung", "EU; die Anmeldung auch USA"],
-        ["Google (Play-Dienste, ML Kit, Google Play)", "Lesen von Strichcodes und Text auf dem Handy, und Käufe", "Es gilt Googles eigene Datenschutzerklärung"],
+        ["Google (Play-Dienste, ML Kit, Google Play)", "Lesen von Strichcodes und Text auf dem Handy, Käufe und Bewertungen", "Es gilt Googles eigene Datenschutzerklärung"],
         ["Open Food Facts", "Produktnamen zu Strichcodes", "Frankreich"],
       ],
       "Gehen Daten in die USA, sind sie durch das EU-US Data Privacy Framework oder die Standardvertragsklauseln der EU geschützt.",
@@ -344,7 +346,7 @@ const TEXT: Record<Lang, PolicyText> = {
       "FridgeBuddy n’a ni compte, ni publicité, ni suivi. Le contenu de votre frigo reste sur votre téléphone.",
     languages: "Langue",
     byline: "FridgeBuddy · Une application de Triple7 Studios, publiée par Bluedeer IT AB",
-    updated: "Dernière mise à jour : 25 novembre 2026",
+    updated: "Dernière mise à jour : 26 novembre 2026",
     lede: "FridgeBuddy n’a ni compte ni publicité, et rien ne vous suit. Le contenu de votre frigo reste sur votre téléphone. Seuls les numéros de code-barres en sortent, pour trouver le nom des produits, ainsi que ce que vous choisissez de partager avec d’autres utilisateurs : noms et catégories.",
     who: [
       "Qui sommes-nous",
@@ -359,7 +361,7 @@ const TEXT: Record<Lang, PolicyText> = {
     phone: [
       "Ce qui reste sur votre téléphone",
       [
-        "Vos produits, leurs dates de péremption et leurs quantités.",
+        "Vos produits, leurs dates de péremption et leurs quantités, et s’ils sont ouverts ou au congélateur.",
         "Votre historique et vos statistiques : ce que vous avez mangé et ce que vous avez jeté.",
         "Votre liste de courses.",
         "Les noms que vous avez donnés aux codes-barres scannés, et les catégories et types de date choisis.",
@@ -396,15 +398,15 @@ const TEXT: Record<Lang, PolicyText> = {
       "Ces données sont stockées chez Google Firebase sur des serveurs dans l’UE (Belgique et Pays-Bas). La connexion anonyme est gérée par Firebase Authentication, que Google peut aussi traiter aux États-Unis. Les noms et catégories partagés sont conservés tant qu’ils sont utiles aux autres.",
     ],
     purchases: [
-      "Achats",
-      "FridgeBuddy Premium est un achat unique via Google Play, qui gère le paiement ; nous ne voyons jamais vos données de carte. L’application reçoit seulement la confirmation de Google Play qui débloque Premium.",
+      "Achats et notes",
+      "FridgeBuddy Premium est un achat unique via Google Play, qui gère le paiement ; nous ne voyons jamais vos données de carte. L’application reçoit seulement la confirmation de Google Play qui débloque Premium. Depuis la version 1.2, l’application demande de temps en temps à Google Play d’afficher sa propre fenêtre de notation. Si vous y notez FridgeBuddy, Google Play s’en charge ; l’application ne sait jamais si ni comment vous l’avez notée.",
     ],
     helpers: [
       "Qui nous aide à faire fonctionner l’application",
       ["Entreprise", "Ce qu’elle fait pour nous", "Où"],
       [
         ["Google (Firebase)", "Stocke les noms et catégories partagés et gère la connexion anonyme", "UE ; la connexion aussi aux États-Unis"],
-        ["Google (services Google Play, ML Kit, Google Play)", "Lecture des codes-barres et du texte sur le téléphone, et achats", "Les règles de confidentialité de Google s’appliquent"],
+        ["Google (services Google Play, ML Kit, Google Play)", "Lecture des codes-barres et du texte sur le téléphone, achats et notes", "Les règles de confidentialité de Google s’appliquent"],
         ["Open Food Facts", "Noms de produits à partir des codes-barres", "France"],
       ],
       "Lorsque des données vont aux États-Unis, elles sont protégées par le Data Privacy Framework UE–États-Unis ou par les clauses contractuelles types de l’UE.",
@@ -445,7 +447,7 @@ const TEXT: Record<Lang, PolicyText> = {
       "FridgeBuddy no tiene cuentas, ni anuncios, ni seguimiento. Lo que hay en tu nevera se queda en tu teléfono.",
     languages: "Idioma",
     byline: "FridgeBuddy · Una app de Triple7 Studios, publicada por Bluedeer IT AB",
-    updated: "Última actualización: 25 de noviembre de 2026",
+    updated: "Última actualización: 26 de noviembre de 2026",
     lede: "FridgeBuddy no tiene cuentas ni anuncios, y nada te sigue. Lo que hay en tu nevera se queda en tu teléfono. Solo salen de él los números de código de barras, para buscar nombres de productos, y lo que decides compartir con otros usuarios: nombres y categorías.",
     who: [
       "Quiénes somos",
@@ -459,7 +461,7 @@ const TEXT: Record<Lang, PolicyText> = {
     phone: [
       "Lo que se queda en tu teléfono",
       [
-        "Tus productos, sus fechas de consumo preferente y cantidades.",
+        "Tus productos, sus fechas de consumo preferente y cantidades, y si están abiertos o en el congelador.",
         "Tu historial y estadísticas: lo que comiste y lo que tiraste.",
         "Tu lista de la compra.",
         "Los nombres que diste a códigos de barras escaneados, y las categorías y tipos de fecha que elegiste.",
@@ -495,15 +497,15 @@ const TEXT: Record<Lang, PolicyText> = {
       "Estos datos se almacenan en Google Firebase, en servidores de la UE (Bélgica y Países Bajos). El inicio de sesión anónimo lo gestiona Firebase Authentication, que Google también puede tratar en Estados Unidos. Los nombres y categorías compartidos se conservan mientras sean útiles para otros.",
     ],
     purchases: [
-      "Compras",
-      "FridgeBuddy Premium es una compra única a través de Google Play, que gestiona el pago; nunca vemos los datos de tu tarjeta. La app solo recibe la confirmación de Google Play que desbloquea Premium.",
+      "Compras y valoraciones",
+      "FridgeBuddy Premium es una compra única a través de Google Play, que gestiona el pago; nunca vemos los datos de tu tarjeta. La app solo recibe la confirmación de Google Play que desbloquea Premium. Desde la versión 1.2, la app pide de vez en cuando a Google Play que muestre su propia ventana de valoración. Si valoras FridgeBuddy ahí, lo gestiona Google Play; la app nunca sabe si la has valorado ni cómo.",
     ],
     helpers: [
       "Quién nos ayuda a hacer funcionar la app",
       ["Empresa", "Qué hace por nosotros", "Dónde"],
       [
         ["Google (Firebase)", "Guarda los nombres y categorías compartidos y gestiona el inicio de sesión anónimo", "UE; el inicio de sesión también EE. UU."],
-        ["Google (servicios de Google Play, ML Kit, Google Play)", "Lectura de códigos de barras y texto en el teléfono, y compras", "Se aplica la política de privacidad de Google"],
+        ["Google (servicios de Google Play, ML Kit, Google Play)", "Lectura de códigos de barras y texto en el teléfono, compras y valoraciones", "Se aplica la política de privacidad de Google"],
         ["Open Food Facts", "Nombres de productos a partir de códigos de barras", "Francia"],
       ],
       "Cuando los datos van a Estados Unidos, están protegidos por el Marco de Privacidad de Datos UE-EE. UU. o por las cláusulas contractuales tipo de la UE.",
@@ -543,7 +545,7 @@ const TEXT: Record<Lang, PolicyText> = {
       "FridgeBuddy har ingen konti, ingen reklamer og ingen sporing. Det, der er i dit køleskab, bliver på din telefon.",
     languages: "Sprog",
     byline: "FridgeBuddy · En app fra Triple7 Studios, udgivet af Bluedeer IT AB",
-    updated: "Sidst opdateret: 25. november 2026",
+    updated: "Sidst opdateret: 26. november 2026",
     lede: "FridgeBuddy har ingen konti og ingen reklamer, og intet sporer dig. Det, der er i dit køleskab, bliver på din telefon. Kun stregkodenumre forlader den, for at finde varenavne, og det, du vælger at dele med andre brugere: navne og kategorier.",
     who: [
       "Hvem vi er",
@@ -557,7 +559,7 @@ const TEXT: Record<Lang, PolicyText> = {
     phone: [
       "Det bliver på din telefon",
       [
-        "Dine varer, deres bedst før-datoer og antal.",
+        "Dine varer, deres bedst før-datoer og antal, og om de er åbnet eller ligger i fryseren.",
         "Din historik og statistik: hvad du har spist, og hvad du har smidt ud.",
         "Din indkøbsliste.",
         "De navne, du har givet scannede stregkoder, og de kategorier og datotyper, du har valgt.",
@@ -591,15 +593,15 @@ const TEXT: Record<Lang, PolicyText> = {
       "Disse data opbevares hos Google Firebase på servere i EU (Belgien og Holland). Det anonyme login håndteres af Firebase Authentication, som Google også kan behandle i USA. Delte navne og kategorier gemmes, så længe de er til nytte for andre.",
     ],
     purchases: [
-      "Køb",
-      "FridgeBuddy Premium er et engangskøb via Google Play, som står for betalingen; vi ser aldrig dine kortoplysninger. Appen får kun Google Plays bekræftelse, som låser Premium op.",
+      "Køb og bedømmelser",
+      "FridgeBuddy Premium er et engangskøb via Google Play, som står for betalingen; vi ser aldrig dine kortoplysninger. Appen får kun Google Plays bekræftelse, som låser Premium op. Fra version 1.2 beder appen af og til Google Play om at vise sit eget bedømmelsesvindue. Bedømmer du FridgeBuddy der, står Google Play for det; appen får aldrig at vide, om eller hvordan du har bedømt den.",
     ],
     helpers: [
       "Hvem hjælper os med at drive appen",
       ["Virksomhed", "Hvad de gør for os", "Hvor"],
       [
         ["Google (Firebase)", "Gemmer delte navne og kategorier og håndterer det anonyme login", "EU; login også USA"],
-        ["Google (Play-tjenester, ML Kit, Google Play)", "Læser stregkoder og tekst på telefonen, og køb", "Googles egen privatlivspolitik gælder"],
+        ["Google (Play-tjenester, ML Kit, Google Play)", "Læser stregkoder og tekst på telefonen, køb og bedømmelser", "Googles egen privatlivspolitik gælder"],
         ["Open Food Facts", "Varenavne ud fra stregkoder", "Frankrig"],
       ],
       "Når data går til USA, er de beskyttet af EU-US Data Privacy Framework eller EU’s standardkontraktbestemmelser.",
@@ -639,7 +641,7 @@ const TEXT: Record<Lang, PolicyText> = {
       "FridgeBuddy har ingen kontoer, ingen reklame og ingen sporing. Det som er i kjøleskapet ditt, blir på telefonen din.",
     languages: "Språk",
     byline: "FridgeBuddy · En app fra Triple7 Studios, utgitt av Bluedeer IT AB",
-    updated: "Sist oppdatert: 25. november 2026",
+    updated: "Sist oppdatert: 26. november 2026",
     lede: "FridgeBuddy har ingen kontoer og ingen reklame, og ingenting sporer deg. Det som er i kjøleskapet ditt, blir på telefonen din. Bare strekkodenumre forlater den, for å finne varenavn, og det du velger å dele med andre brukere: navn og kategorier.",
     who: [
       "Hvem vi er",
@@ -653,7 +655,7 @@ const TEXT: Record<Lang, PolicyText> = {
     phone: [
       "Dette blir på telefonen din",
       [
-        "Varene dine, best før-datoene deres og antall.",
+        "Varene dine, best før-datoene deres og antall, og om de er åpnet eller ligger i fryseren.",
         "Historikken og statistikken din: hva du har spist, og hva du har kastet.",
         "Handlelisten din.",
         "Navnene du har gitt skannede strekkoder, og kategoriene og datotypene du har valgt.",
@@ -687,15 +689,15 @@ const TEXT: Record<Lang, PolicyText> = {
       "Disse dataene lagres hos Google Firebase på servere i EU (Belgia og Nederland). Den anonyme innloggingen håndteres av Firebase Authentication, som Google også kan behandle i USA. Delte navn og kategorier lagres så lenge de er til nytte for andre.",
     ],
     purchases: [
-      "Kjøp",
-      "FridgeBuddy Premium er et engangskjøp via Google Play, som håndterer betalingen; vi ser aldri kortopplysningene dine. Appen får bare Google Plays bekreftelse som låser opp Premium.",
+      "Kjøp og vurderinger",
+      "FridgeBuddy Premium er et engangskjøp via Google Play, som håndterer betalingen; vi ser aldri kortopplysningene dine. Appen får bare Google Plays bekreftelse som låser opp Premium. Fra versjon 1.2 ber appen av og til Google Play om å vise sitt eget vurderingsvindu. Vurderer du FridgeBuddy der, håndterer Google Play det; appen får aldri vite om eller hvordan du har vurdert den.",
     ],
     helpers: [
       "Hvem som hjelper oss å drive appen",
       ["Selskap", "Hva de gjør for oss", "Hvor"],
       [
         ["Google (Firebase)", "Lagrer delte navn og kategorier og håndterer den anonyme innloggingen", "EU; innloggingen også USA"],
-        ["Google (Play-tjenester, ML Kit, Google Play)", "Leser strekkoder og tekst på telefonen, og kjøp", "Googles egne personvernregler gjelder"],
+        ["Google (Play-tjenester, ML Kit, Google Play)", "Leser strekkoder og tekst på telefonen, kjøp og vurderinger", "Googles egne personvernregler gjelder"],
         ["Open Food Facts", "Varenavn ut fra strekkoder", "Frankrike"],
       ],
       "Når data går til USA, er de beskyttet av EU–US Data Privacy Framework eller EUs standardkontraktsklausuler.",

@@ -52,7 +52,7 @@ const FEATURES = [
   {
     icon: "❄️",
     title: "Opened or in the freezer",
-    text: "In the freezer the date becomes a reminder, a month to a year ahead. Food without a date, like leftovers or bread, gets a suggested one.",
+    text: "Mark something opened, or put it in the freezer, where the date becomes a reminder a month to a year ahead. Food without a date, like leftovers or bread, gets a suggested one.",
   },
   {
     icon: "💡",
@@ -88,17 +88,18 @@ const TECH = [
   {
     title: "Scanning",
     items: [
-      "Barcodes with Google's code scanner: no camera permission needed",
-      "Best-before dates read on the phone with CameraX and ML Kit",
-      "Its own date parser, tested against photos of real packaging",
+      "Barcodes and dates read on the phone with CameraX and ML Kit",
+      "A barcode counts only when several frames agree, so a misread never gets through",
+      "Its own date parser, tested against photos and recorded scans of real packaging",
     ],
   },
   {
-    title: "Product names",
+    title: "Names and categories",
     items: [
-      "Names the household has used before come first",
+      "What the household chose before comes first",
       "Then Open Food Facts, the open food database",
-      "Then names shared by other users, published when two agree",
+      "Then what other users shared, published when two agree",
+      "Otherwise a category guessed from the name",
     ],
   },
 ];
@@ -117,8 +118,8 @@ export default function FridgeBuddyPage() {
           <h1 className={s.title}>FridgeBuddy</h1>
           <p className={s.lede}>
             Keep track of what&apos;s in your fridge and eat it before it goes off. FridgeBuddy
-            sorts your food by best-before date, reminds you in time and helps you throw away
-            less. No account, no ads, and your fridge stays on your phone.
+            sorts your food by date, reminds you in time and helps you throw away less. No
+            account, no ads, and your fridge stays on your phone.
           </p>
           <div className={s.chips}>
             <a className={s.chip} href={GOOGLE_PLAY} target="_blank" rel="noreferrer">
@@ -191,7 +192,8 @@ export default function FridgeBuddyPage() {
       <section>
         <h2 className={s.sectionTitle}>Technical overview</h2>
         <p className={s.sectionSubtitle}>
-          Everything runs on the phone; only barcode numbers go out to look up a name.
+          Everything runs on the phone. Only barcode numbers go out, to look up a product, and
+          what you choose to share with other users.
         </p>
         <div className={s.grid}>
           {TECH.map((block) => (
