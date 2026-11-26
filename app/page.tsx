@@ -41,13 +41,14 @@ const projects = [
     role: "Creator & developer",
     description:
       "Keep track of what's in your fridge and eat it before it goes off. Sorted by best-before date, with a daily reminder, barcode and date scanning, a shopping list and food waste statistics.",
-    meta: "Android · Kotlin · Jetpack Compose · Coming soon",
+    meta: "Android · Kotlin · Jetpack Compose",
     images: [
       "/fridgebuddy/screens/fridge.jpg",
       "/fridgebuddy/screens/date-kalles.jpg",
       "/fridgebuddy/screens/widget.jpg",
     ],
     thumbRatio: 540 / 1202, // portrait, a tall phone
+    storeHref: "https://play.google.com/store/apps/details?id=se.triple7.fridgebuddy",
   },
 
   {
@@ -253,7 +254,7 @@ export default function Home() {
 
         <article className="card">
           <div className="cardTitle">Latest status</div>
-          <div className="cardBody">Gamelings 1.1 live on Google Play and the App Store</div>
+          <div className="cardBody">FridgeBuddy 1.1 live on Google Play</div>
         </article>
       </section>
 

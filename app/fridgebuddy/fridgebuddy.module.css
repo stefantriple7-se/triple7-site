@@ -77,11 +77,26 @@
   font-weight: 600;
   white-space: nowrap;
 }
-.soon {
+a.chip:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+.live {
   width: 8px;
   height: 8px;
   border-radius: 999px;
-  background: #f59e0b;
+  background: #22c55e;
+}
+.stores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 14px;
+}
+.storeBadge {
+  display: inline-flex;
+  align-items: center;
+  height: 54px;
 }
 @media (max-width: 640px) {
   .hero {

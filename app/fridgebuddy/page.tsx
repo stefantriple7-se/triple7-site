@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import s from "./fridgebuddy.module.css";
 
+const GOOGLE_PLAY = "https://play.google.com/store/apps/details?id=se.triple7.fridgebuddy";
+
 // The screenshots come from the debug app: most on a Pixel 8 Pro emulator with demo data
 // (540x1202 after scaling), the date scans on a Galaxy S24 with real packages (status bar
 // cropped off, 540x1115).
@@ -105,10 +107,10 @@ export default function FridgeBuddyPage() {
             less. No account, no ads, and your fridge stays on your phone.
           </p>
           <div className={s.chips}>
-            <span className={s.chip}>
-              <span className={s.soon} />
-              Google Play — coming soon
-            </span>
+            <a className={s.chip} href={GOOGLE_PLAY} target="_blank" rel="noreferrer">
+              <span className={s.live} />
+              Google Play
+            </a>
             <span className={s.chip}>Android · Kotlin · Jetpack Compose</span>
             <span className={s.chip}>7 languages</span>
           </div>
@@ -192,8 +194,13 @@ export default function FridgeBuddyPage() {
       </section>
 
       <section>
-        <h2 className={s.sectionTitle}>Availability</h2>
-        <p className={s.sectionSubtitle}>Coming soon to Google Play, published by Bluedeer IT AB.</p>
+        <h2 className={s.sectionTitle}>Get FridgeBuddy</h2>
+        <p className={s.sectionSubtitle}>On Google Play, published by Bluedeer IT AB.</p>
+        <div className={s.stores}>
+          <a className={s.storeBadge} href={GOOGLE_PLAY} target="_blank" rel="noreferrer">
+            <Image src="/googleplay.png" alt="Get it on Google Play" width={182} height={54} />
+          </a>
+        </div>
         <div className={s.links}>
           <span>
             <Link className={s.link} href="/fridgebuddy/privacy">
