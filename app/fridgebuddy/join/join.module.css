@@ -1,0 +1,41 @@
+/* The join page's own parts; the rest comes from ../legal.module.css. */
+
+.codeBox {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  margin: 24px 0;
+  padding: 20px 16px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.codeLabel {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* Big and spaced, to read out or type: no 0/O or 1/I/L in a code. */
+.code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: clamp(36px, 11vw, 52px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.1;
+}
+
+.steps {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 24px;
+  padding-left: 1.4em;
+}
+
+.play {
+  display: inline-block;
+  margin: 0 0 20px;
+}
+.play img {
+  display: block;
+}

@@ -9,11 +9,15 @@ import s from "./legal.module.css";
 // - barcode numbers go to Open Food Facts;
 // - shared names, and from 1.1 categories and use-by, live in Firestore (the "(default)" database in eur3: Belgium and the
 //   Netherlands), with Firebase anonymous auth;
+// - 1.3: shared households in the same Firestore (households/{id}: members and owner; under it products,
+//   shopping, history, memory, and members/{uid} profiles with a name and a Premium flag), stamped with
+//   the writer's random ID; invites/{code} for at most 48 hours, deleted by a TTL policy on expiresAt;
+//   invite QR codes read with ML Kit;
 // - Premium is a Google Play one-time purchase, checked on the phone;
 // - 1.2: whether a product is opened or frozen stays on the phone, and the app may ask Google Play
 //   to show its in-app rating sheet (Play handles the rating; the app learns nothing).
 
-const UPDATED = "2026-11-26";
+const UPDATED = "2026-11-27";
 
 function Email() {
   return (
@@ -35,6 +39,7 @@ type PolicyText = {
   camera: [string, ReactNode];
   lookup: [string, ReactNode];
   shared: [string, string, string, string];
+  household: [string, string, string, string];
   purchases: [string, string];
   helpers: [string, [string, string, string], [string, string, string][], string];
   never: [string, string[]];
@@ -54,11 +59,11 @@ const TEXT: Record<Lang, PolicyText> = {
   en: {
     title: "FridgeBuddy privacy policy",
     description:
-      "FridgeBuddy has no accounts, no ads and no tracking. What’s in your fridge stays on your phone.",
+      "FridgeBuddy has no accounts, no ads and no tracking. What’s in your fridge stays on your phone, unless you share it with your household.",
     languages: "Language",
     byline: "FridgeBuddy · An app from Triple7 Studios, published by Bluedeer IT AB",
-    updated: "Last updated: 26 November 2026",
-    lede: "FridgeBuddy has no accounts and no ads, and nothing tracks you. What’s in your fridge stays on your phone. Only barcode numbers leave it, to look up product names, and what you choose to share with other users: names and categories.",
+    updated: "Last updated: 27 November 2026",
+    lede: "FridgeBuddy has no accounts and no ads, and nothing tracks you. What’s in your fridge stays on your phone, unless you share it with your household. Otherwise only barcode numbers leave it, to look up product names, and what you choose to share with other users: names and categories.",
     who: [
       "Who we are",
       <>
@@ -77,13 +82,12 @@ const TEXT: Record<Lang, PolicyText> = {
         "The names you gave scanned barcodes, and the categories and kinds of date you chose.",
         "Your settings: reminders, language, theme, and whether you have Premium.",
       ],
-      "We never receive any of this. If Android backup is on, Android includes it in your phone’s backup to your Google account, which you control in the phone’s settings. Deleting the app deletes it from the phone.",
+      "We never receive any of this, unless you share a household (see below). If Android backup is on, Android includes it in your phone’s backup to your Google account, which you control in the phone’s settings. Deleting the app deletes it from the phone.",
     ],
     camera: [
       "The camera",
       <>
-        The camera is only used while you scan. Barcodes, best-before dates and product names are
-        read on your phone with Google ML Kit, and the pictures are never saved or sent. (Version
+        The camera is only used while you scan. Barcodes, best-before dates, product names and (from version 1.3) the QR codes of household invites are read on your phone with Google ML Kit, and the pictures are never saved or sent. (Version
         1.0 read barcodes with the code scanner in Google Play services, which only gave the app the
         barcode number.) Google Play services and ML Kit may send Google anonymous technical data,
         such as the phone model, app version and performance figures, to keep them working; see{" "}
@@ -104,6 +108,12 @@ const TEXT: Record<Lang, PolicyText> = {
       "Sharing is off until you say yes, the first time it would help. After that, when you save a scanned product, the barcode, the random ID and the time are stored, with the name you gave it if Open Food Facts doesn’t know it, and (from version 1.1) the category you chose and whether it has a use-by date. Others only see a name or a category once two users agree on it or we have approved it. Barcodes that only work in one shop, such as on weighed goods, are never shared. Reporting a wrong name sends the barcode, the name shown, the random ID and the time. You can stop sharing at any time in Settings → Scanning.",
       "This data is stored with Google Firebase on servers in the EU (Belgium and the Netherlands). The anonymous sign-in is handled by Firebase Authentication, which Google may also process in the USA. Shared names and categories are kept as long as they are useful to others.",
     ],
+    household: [
+      "Sharing with your household",
+      "From version 1.3 you can share FridgeBuddy with the people you live with, up to six (creating a household needs Premium; joining one doesn’t). In a household, what is otherwise only on your phone is also stored with FridgeBuddy’s service, so that every phone in it shows the same: the products with their dates, quantities, categories and whether they’re opened or frozen, the shopping list, the history of what was eaten and thrown away, and the categories and kinds of date the app remembers for product names. The names you gave scanned barcodes are not shared. Each change is stored with the random ID of the phone that made it and the time.",
+      "The others in the household see the name you give yourself there, and whether you have Premium (only someone with Premium can take over as its owner). Only the household’s members can read its data. An invite is a six-character code that lets whoever has it join, for at most 48 hours. It is stored with the household it is for, the random ID of whoever made it and when it expires, and deleted after that.",
+      "This data is stored with Google Firebase in the EU, like the shared names, for as long as the household exists. When you leave the household, or its owner takes you out, your name there is deleted; what you added stays with the others, and your phone keeps its own copy. When the owner deletes the household, all of its data is deleted from the servers.",
+    ],
     purchases: [
       "Purchases and ratings",
       "FridgeBuddy Premium is a one-time purchase through Google Play, which handles the payment; we never see your card details. The app only receives Google Play’s confirmation that unlocks Premium. From version 1.2 the app now and then asks Google Play to show its own rating sheet. If you rate FridgeBuddy there, Google Play handles it; the app never learns whether or how you rated it.",
@@ -112,7 +122,7 @@ const TEXT: Record<Lang, PolicyText> = {
       "Who helps us run the app",
       ["Company", "What they do for us", "Where"],
       [
-        ["Google (Firebase)", "Stores shared names and categories and handles the anonymous sign-in", "EU; the sign-in also the USA"],
+        ["Google (Firebase)", "Stores shared names and categories and shared households, and handles the anonymous sign-in", "EU; the sign-in also the USA"],
         ["Google (Play services, ML Kit, Google Play)", "Reading barcodes and text on the phone, purchases and ratings", "Google’s own privacy policy applies"],
         ["Open Food Facts", "Product names for barcodes", "France"],
       ],
@@ -129,7 +139,7 @@ const TEXT: Record<Lang, PolicyText> = {
     ],
     legal: [
       "Our legal grounds (GDPR)",
-      "Looking up names and purchases are needed to provide what you asked for (contract). Sharing names and categories is based on your consent, which you can withdraw in Settings.",
+      "Looking up names, purchases and sharing with your household are needed to provide what you asked for (contract). Sharing names and categories with all users is based on your consent, which you can withdraw in Settings.",
     ],
     children: ["Children", "FridgeBuddy is not directed at children under 13."],
     rights: [
@@ -141,6 +151,7 @@ const TEXT: Record<Lang, PolicyText> = {
           Names and categories you shared: write to <Email /> with the barcode. We don’t know who
           you are, so without it we can’t tell which are yours.
         </>,
+        "Your household: leave it in the app, which deletes your name there, or, as its owner, delete it, which deletes all of its data.",
         "Complaints: you can contact Sweden’s data protection authority, IMY (imy.se), or the authority where you live.",
       ],
     ],
@@ -150,11 +161,11 @@ const TEXT: Record<Lang, PolicyText> = {
   sv: {
     title: "FridgeBuddys integritetspolicy",
     description:
-      "FridgeBuddy har inga konton, ingen reklam och ingen spårning. Det som finns i ditt kylskåp stannar i din telefon.",
+      "FridgeBuddy har inga konton, ingen reklam och ingen spårning. Det som finns i ditt kylskåp stannar i din telefon, om du inte delar det med ditt hushåll.",
     languages: "Språk",
     byline: "FridgeBuddy · En app från Triple7 Studios, utgiven av Bluedeer IT AB",
-    updated: "Senast uppdaterad: 26 november 2026",
-    lede: "FridgeBuddy har inga konton och ingen reklam, och ingenting spårar dig. Det som finns i ditt kylskåp stannar i din telefon. Bara streckkodsnummer lämnar den, för att hitta varunamn, och det du väljer att dela med andra användare: namn och kategorier.",
+    updated: "Senast uppdaterad: 27 november 2026",
+    lede: "FridgeBuddy har inga konton och ingen reklam, och ingenting spårar dig. Det som finns i ditt kylskåp stannar i din telefon, om du inte delar det med ditt hushåll. Annars lämnar bara streckkodsnummer den, för att hitta varunamn, och det du väljer att dela med andra användare: namn och kategorier.",
     who: [
       "Vilka vi är",
       <>
@@ -173,13 +184,12 @@ const TEXT: Record<Lang, PolicyText> = {
         "Namnen du gett skannade streckkoder, och kategorierna och datumtyperna du valt.",
         "Dina inställningar: påminnelser, språk, tema och om du har Premium.",
       ],
-      "Vi får aldrig del av något av detta. Om Android-säkerhetskopiering är påslagen tar Android med det i telefonens säkerhetskopia till ditt Google-konto, som du styr i telefonens inställningar. Tar du bort appen raderas det från telefonen.",
+      "Vi får aldrig del av något av detta, om du inte delar ett hushåll (se nedan). Om Android-säkerhetskopiering är påslagen tar Android med det i telefonens säkerhetskopia till ditt Google-konto, som du styr i telefonens inställningar. Tar du bort appen raderas det från telefonen.",
     ],
     camera: [
       "Kameran",
       <>
-        Kameran används bara medan du skannar. Streckkoder, bäst före-datum och varunamn läses i din
-        telefon med Google ML Kit, och bilderna sparas eller skickas aldrig. (Version 1.0 läste
+        Kameran används bara medan du skannar. Streckkoder, bäst före-datum, varunamn och (från version 1.3) QR-koder för hushållsinbjudningar läses i din telefon med Google ML Kit, och bilderna sparas eller skickas aldrig. (Version 1.0 läste
         streckkoder med kodskannern i Google Play-tjänster, som bara gav appen streckkodsnumret.)
         Google Play-tjänster och ML Kit kan skicka anonym teknisk data till Google, till exempel
         telefonmodell, appversion och prestandauppgifter, för att fungera; se{" "}
@@ -200,6 +210,12 @@ const TEXT: Record<Lang, PolicyText> = {
       "Delning är avstängd tills du säger ja, första gången den skulle hjälpa. Därefter lagras, när du sparar en skannad vara, streckkoden, det slumpmässiga id:t och tidpunkten, tillsammans med namnet du gav varan om Open Food Facts inte känner till den, och (från version 1.1) kategorin du valde och om den har sista förbrukningsdag. Andra ser ett namn eller en kategori först när två användare är överens om det eller vi har godkänt det. Streckkoder som bara gäller i en butik, till exempel på vägda varor, delas aldrig. En rapport om fel namn skickar streckkoden, namnet som visades, det slumpmässiga id:t och tidpunkten. Du kan när som helst sluta dela under Inställningar → Skanning.",
       "Den här datan lagras hos Google Firebase på servrar i EU (Belgien och Nederländerna). Den anonyma inloggningen sköts av Firebase Authentication, som Google även kan behandla i USA. Delade namn och kategorier sparas så länge de är till nytta för andra.",
     ],
+    household: [
+      "Dela med ditt hushåll",
+      "Från version 1.3 kan du dela FridgeBuddy med dem du bor med, upp till sex personer (att skapa ett hushåll kräver Premium, att gå med gör det inte). I ett hushåll lagras det som annars bara finns i din telefon även hos FridgeBuddys tjänst, så att alla telefoner i hushållet visar samma sak: varorna med datum, antal, kategori och om de är öppnade eller frysta, inköpslistan, historiken över vad som ätits och slängts, och de kategorier och datumtyper som appen minns för varunamn. Namnen du gett skannade streckkoder delas inte. Varje ändring lagras med det slumpmässiga id:t för telefonen som gjorde den och tidpunkten.",
+      "De andra i hushållet ser namnet du ger dig själv där och om du har Premium (bara någon med Premium kan ta över som ägare). Bara hushållets medlemmar kan läsa dess data. En inbjudan är en kod på sex tecken som låter den som har den gå med, i högst 48 timmar. Den lagras med vilket hushåll den gäller, det slumpmässiga id:t för den som skapade den och när den går ut, och raderas därefter.",
+      "Den här datan lagras hos Google Firebase i EU, som de delade namnen, så länge hushållet finns. När du lämnar hushållet, eller ägaren tar ut dig, raderas ditt namn där; det du lagt till finns kvar hos de andra, och din telefon behåller sin egen kopia. När ägaren tar bort hushållet raderas all dess data från servrarna.",
+    ],
     purchases: [
       "Köp och betyg",
       "FridgeBuddy Premium är ett engångsköp via Google Play, som sköter betalningen; vi ser aldrig dina kortuppgifter. Appen får bara Google Plays bekräftelse som låser upp Premium. Från version 1.2 ber appen ibland Google Play att visa sin egen betygsruta. Om du betygsätter FridgeBuddy där sköter Google Play det; appen får aldrig veta om eller hur du betygsatt den.",
@@ -208,7 +224,7 @@ const TEXT: Record<Lang, PolicyText> = {
       "Vilka som hjälper oss att driva appen",
       ["Företag", "Vad de gör åt oss", "Var"],
       [
-        ["Google (Firebase)", "Lagrar delade namn och kategorier och sköter den anonyma inloggningen", "EU; inloggningen även USA"],
+        ["Google (Firebase)", "Lagrar delade namn och kategorier och delade hushåll, och sköter den anonyma inloggningen", "EU; inloggningen även USA"],
         ["Google (Play-tjänster, ML Kit, Google Play)", "Läser streckkoder och text i telefonen, köpen och betygen", "Googles egen integritetspolicy gäller"],
         ["Open Food Facts", "Varunamn utifrån streckkoder", "Frankrike"],
       ],
@@ -225,7 +241,7 @@ const TEXT: Record<Lang, PolicyText> = {
     ],
     legal: [
       "Rättslig grund (GDPR)",
-      "Uppslag av namn och köp behövs för att ge dig det du bett om (avtal). Delning av namn och kategorier bygger på ditt samtycke, som du kan återkalla i Inställningar.",
+      "Uppslag av namn, köp och delning med ditt hushåll behövs för att ge dig det du bett om (avtal). Delning av namn och kategorier med alla användare bygger på ditt samtycke, som du kan återkalla i Inställningar.",
     ],
     children: ["Barn", "FridgeBuddy riktar sig inte till barn under 13 år."],
     rights: [
@@ -237,6 +253,7 @@ const TEXT: Record<Lang, PolicyText> = {
           Namn och kategorier du delat: skriv till <Email /> med streckkoden. Vi vet inte vem du är,
           så utan den kan vi inte se vad som är ditt.
         </>,
+        "Ditt hushåll: lämna det i appen, så raderas ditt namn där, eller ta bort det som ägare, så raderas all dess data.",
         "Klagomål: du kan kontakta Integritetsskyddsmyndigheten, IMY (imy.se), eller myndigheten där du bor.",
       ],
     ],
@@ -246,11 +263,11 @@ const TEXT: Record<Lang, PolicyText> = {
   de: {
     title: "Datenschutzerklärung für FridgeBuddy",
     description:
-      "FridgeBuddy hat keine Konten, keine Werbung und kein Tracking. Was in deinem Kühlschrank ist, bleibt auf deinem Handy.",
+      "FridgeBuddy hat keine Konten, keine Werbung und kein Tracking. Was in deinem Kühlschrank ist, bleibt auf deinem Handy – außer du teilst es mit deinem Haushalt.",
     languages: "Sprache",
     byline: "FridgeBuddy · Eine App von Triple7 Studios, herausgegeben von Bluedeer IT AB",
-    updated: "Zuletzt aktualisiert: 26. November 2026",
-    lede: "FridgeBuddy hat keine Konten und keine Werbung, und nichts verfolgt dich. Was in deinem Kühlschrank ist, bleibt auf deinem Handy. Nur Strichcodenummern verlassen es, um Produktnamen nachzuschlagen, und was du mit anderen Nutzern teilen möchtest: Namen und Kategorien.",
+    updated: "Zuletzt aktualisiert: 27. November 2026",
+    lede: "FridgeBuddy hat keine Konten und keine Werbung, und nichts verfolgt dich. Was in deinem Kühlschrank ist, bleibt auf deinem Handy – außer du teilst es mit deinem Haushalt. Sonst verlassen es nur Strichcodenummern, um Produktnamen nachzuschlagen, und was du mit anderen Nutzern teilen möchtest: Namen und Kategorien.",
     who: [
       "Wer wir sind",
       <>
@@ -269,13 +286,12 @@ const TEXT: Record<Lang, PolicyText> = {
         "Die Namen, die du gescannten Strichcodes gegeben hast, und die gewählten Kategorien und Datumsarten.",
         "Deine Einstellungen: Erinnerungen, Sprache, Farbschema und ob du Premium hast.",
       ],
-      "Wir erhalten nichts davon. Ist die Android-Sicherung aktiviert, nimmt Android es in die Sicherung deines Handys in deinem Google-Konto auf, die du in den Einstellungen des Handys steuerst. Wenn du die App löschst, wird es vom Handy gelöscht.",
+      "Wir erhalten nichts davon, außer du teilst einen Haushalt (siehe unten). Ist die Android-Sicherung aktiviert, nimmt Android es in die Sicherung deines Handys in deinem Google-Konto auf, die du in den Einstellungen des Handys steuerst. Wenn du die App löschst, wird es vom Handy gelöscht.",
     ],
     camera: [
       "Kamera",
       <>
-        Die Kamera wird nur beim Scannen verwendet. Strichcodes, Mindesthaltbarkeitsdaten und
-        Produktnamen werden auf deinem Handy mit Google ML Kit gelesen; die Bilder werden nie
+        Die Kamera wird nur beim Scannen verwendet. Strichcodes, Mindesthaltbarkeitsdaten, Produktnamen und (ab Version 1.3) die QR-Codes von Haushaltseinladungen werden auf deinem Handy mit Google ML Kit gelesen; die Bilder werden nie
         gespeichert oder gesendet. (Version 1.0 las Strichcodes mit dem Codescanner der Google
         Play-Dienste, der der App nur die Strichcodenummer gab.) Die Google Play-Dienste und ML Kit
         können anonyme technische Daten an Google senden, etwa Gerätemodell, App-Version und
@@ -297,6 +313,12 @@ const TEXT: Record<Lang, PolicyText> = {
       "Teilen ist aus, bis du zustimmst – beim ersten Mal, wenn es helfen würde. Danach werden, wenn du ein gescanntes Produkt hinzufügst, der Strichcode, die zufällige ID und der Zeitpunkt gespeichert, zusammen mit dem von dir vergebenen Namen, wenn Open Food Facts das Produkt nicht kennt, und (ab Version 1.1) der gewählten Kategorie und ob es ein Verbrauchsdatum hat. Andere sehen einen Namen oder eine Kategorie erst, wenn sich zwei Nutzer einig sind oder wir sie freigegeben haben. Strichcodes, die nur in einem Geschäft gelten, etwa auf abgewogener Ware, werden nie geteilt. Eine Meldung „Falscher Name“ sendet den Strichcode, den angezeigten Namen, die zufällige ID und den Zeitpunkt. Du kannst das Teilen jederzeit unter Einstellungen → Scannen beenden.",
       "Diese Daten werden bei Google Firebase auf Servern in der EU (Belgien und Niederlande) gespeichert. Die anonyme Anmeldung übernimmt Firebase Authentication, das Google auch in den USA verarbeiten kann. Geteilte Namen und Kategorien werden aufbewahrt, solange sie anderen nützen.",
     ],
+    household: [
+      "Mit deinem Haushalt teilen",
+      "Ab Version 1.3 kannst du FridgeBuddy mit den Menschen teilen, mit denen du wohnst – mit bis zu sechs Personen (zum Erstellen eines Haushalts brauchst du Premium, zum Beitreten nicht). In einem Haushalt wird, was sonst nur auf deinem Handy ist, auch beim Dienst von FridgeBuddy gespeichert, damit alle Handys im Haushalt dasselbe zeigen: die Produkte mit Daten, Mengen, Kategorien und ob sie geöffnet oder eingefroren sind, die Einkaufsliste, der Verlauf dessen, was gegessen und weggeworfen wurde, und die Kategorien und Datumsarten, die sich die App zu Produktnamen merkt. Die Namen, die du gescannten Strichcodes gegeben hast, werden nicht geteilt. Jede Änderung wird mit der zufälligen ID des Handys, das sie gemacht hat, und dem Zeitpunkt gespeichert.",
+      "Die anderen im Haushalt sehen den Namen, den du dir dort gibst, und ob du Premium hast (nur jemand mit Premium kann den Haushalt als Eigentümer übernehmen). Nur die Mitglieder des Haushalts können seine Daten lesen. Eine Einladung ist ein sechsstelliger Code, mit dem jeder, der ihn hat, höchstens 48 Stunden lang beitreten kann. Sie wird mit dem Haushalt, für den sie gilt, der zufälligen ID dessen, der sie erstellt hat, und ihrem Ablauf gespeichert und danach gelöscht.",
+      "Diese Daten werden wie die geteilten Namen bei Google Firebase in der EU gespeichert, solange der Haushalt besteht. Verlässt du den Haushalt oder entfernt dich der Eigentümer, wird dein Name dort gelöscht; was du hinzugefügt hast, bleibt bei den anderen, und dein Handy behält seine eigene Kopie. Löscht der Eigentümer den Haushalt, werden alle seine Daten von den Servern gelöscht.",
+    ],
     purchases: [
       "Käufe und Bewertungen",
       "FridgeBuddy Premium ist ein einmaliger Kauf über Google Play, das die Zahlung abwickelt; deine Kartendaten sehen wir nie. Die App erhält nur die Bestätigung von Google Play, die Premium freischaltet. Ab Version 1.2 bittet die App Google Play ab und zu, sein eigenes Bewertungsfenster zu zeigen. Bewertest du FridgeBuddy dort, übernimmt das Google Play; die App erfährt nie, ob oder wie du bewertet hast.",
@@ -305,7 +327,7 @@ const TEXT: Record<Lang, PolicyText> = {
       "Wer uns beim Betrieb der App hilft",
       ["Unternehmen", "Was sie für uns tun", "Wo"],
       [
-        ["Google (Firebase)", "Speichert geteilte Namen und Kategorien und übernimmt die anonyme Anmeldung", "EU; die Anmeldung auch USA"],
+        ["Google (Firebase)", "Speichert geteilte Namen und Kategorien und geteilte Haushalte und übernimmt die anonyme Anmeldung", "EU; die Anmeldung auch USA"],
         ["Google (Play-Dienste, ML Kit, Google Play)", "Lesen von Strichcodes und Text auf dem Handy, Käufe und Bewertungen", "Es gilt Googles eigene Datenschutzerklärung"],
         ["Open Food Facts", "Produktnamen zu Strichcodes", "Frankreich"],
       ],
@@ -322,7 +344,7 @@ const TEXT: Record<Lang, PolicyText> = {
     ],
     legal: [
       "Rechtsgrundlagen (DSGVO)",
-      "Das Nachschlagen von Namen und Käufe sind nötig, um dir zu geben, worum du gebeten hast (Vertrag). Das Teilen von Namen und Kategorien beruht auf deiner Einwilligung, die du in den Einstellungen widerrufen kannst.",
+      "Das Nachschlagen von Namen, Käufe und das Teilen mit deinem Haushalt sind nötig, um dir zu geben, worum du gebeten hast (Vertrag). Das Teilen von Namen und Kategorien mit allen Nutzern beruht auf deiner Einwilligung, die du in den Einstellungen widerrufen kannst.",
     ],
     children: ["Kinder", "FridgeBuddy richtet sich nicht an Kinder unter 13 Jahren."],
     rights: [
@@ -334,6 +356,7 @@ const TEXT: Record<Lang, PolicyText> = {
           Geteilte Namen und Kategorien: Schreib an <Email /> mit dem Strichcode. Wir wissen nicht,
           wer du bist, und können ohne diese Angabe nicht erkennen, was von dir ist.
         </>,
+        "Dein Haushalt: Verlass ihn in der App, dann wird dein Name dort gelöscht, oder lösche ihn als Eigentümer, dann werden alle seine Daten gelöscht.",
         "Beschwerden: bei der schwedischen Datenschutzbehörde IMY (imy.se) oder der Behörde an deinem Wohnort.",
       ],
     ],
@@ -343,11 +366,11 @@ const TEXT: Record<Lang, PolicyText> = {
   fr: {
     title: "Politique de confidentialité de FridgeBuddy",
     description:
-      "FridgeBuddy n’a ni compte, ni publicité, ni suivi. Le contenu de votre frigo reste sur votre téléphone.",
+      "FridgeBuddy n’a ni compte, ni publicité, ni suivi. Le contenu de votre frigo reste sur votre téléphone, sauf si vous le partagez avec votre foyer.",
     languages: "Langue",
     byline: "FridgeBuddy · Une application de Triple7 Studios, publiée par Bluedeer IT AB",
-    updated: "Dernière mise à jour : 26 novembre 2026",
-    lede: "FridgeBuddy n’a ni compte ni publicité, et rien ne vous suit. Le contenu de votre frigo reste sur votre téléphone. Seuls les numéros de code-barres en sortent, pour trouver le nom des produits, ainsi que ce que vous choisissez de partager avec d’autres utilisateurs : noms et catégories.",
+    updated: "Dernière mise à jour : 27 novembre 2026",
+    lede: "FridgeBuddy n’a ni compte ni publicité, et rien ne vous suit. Le contenu de votre frigo reste sur votre téléphone, sauf si vous le partagez avec votre foyer. Sinon, seuls les numéros de code-barres en sortent, pour trouver le nom des produits, ainsi que ce que vous choisissez de partager avec d’autres utilisateurs : noms et catégories.",
     who: [
       "Qui sommes-nous",
       <>
@@ -367,13 +390,12 @@ const TEXT: Record<Lang, PolicyText> = {
         "Les noms que vous avez donnés aux codes-barres scannés, et les catégories et types de date choisis.",
         "Vos réglages : rappels, langue, thème, et si vous avez Premium.",
       ],
-      "Nous n’en recevons jamais rien. Si la sauvegarde Android est activée, Android l’inclut dans la sauvegarde de votre téléphone sur votre compte Google, que vous gérez dans les réglages du téléphone. Supprimer l’application l’efface du téléphone.",
+      "Nous n’en recevons jamais rien, sauf si vous partagez un foyer (voir plus bas). Si la sauvegarde Android est activée, Android l’inclut dans la sauvegarde de votre téléphone sur votre compte Google, que vous gérez dans les réglages du téléphone. Supprimer l’application l’efface du téléphone.",
     ],
     camera: [
       "L’appareil photo",
       <>
-        L’appareil photo n’est utilisé que pendant un scan. Les codes-barres, les dates de
-        péremption et les noms de produits sont lus sur votre téléphone avec Google ML Kit ; les
+        L’appareil photo n’est utilisé que pendant un scan. Les codes-barres, les dates de péremption, les noms de produits et (à partir de la version 1.3) les QR codes des invitations de foyer sont lus sur votre téléphone avec Google ML Kit ; les
         images ne sont jamais enregistrées ni envoyées. (La version 1.0 lisait les codes-barres avec
         le lecteur de codes des services Google Play, qui ne transmettait à l’application que le
         numéro.) Les services Google Play et ML Kit peuvent envoyer à Google des données techniques
@@ -397,6 +419,12 @@ const TEXT: Record<Lang, PolicyText> = {
       "Le partage est désactivé tant que vous ne l’acceptez pas, la première fois qu’il serait utile. Ensuite, quand vous enregistrez un produit scanné, le code-barres, l’identifiant aléatoire et l’heure sont conservés, avec le nom que vous lui avez donné s’il est inconnu d’Open Food Facts, et (à partir de la version 1.1) la catégorie choisie et s’il a une date limite de consommation. Un nom ou une catégorie n’est montré aux autres que lorsque deux utilisateurs sont d’accord ou que nous l’avons approuvé. Les codes-barres valables dans un seul magasin, par exemple sur les produits pesés, ne sont jamais partagés. Un signalement « Nom incorrect » envoie le code-barres, le nom affiché, l’identifiant aléatoire et l’heure. Vous pouvez arrêter de partager à tout moment dans Paramètres → Scan.",
       "Ces données sont stockées chez Google Firebase sur des serveurs dans l’UE (Belgique et Pays-Bas). La connexion anonyme est gérée par Firebase Authentication, que Google peut aussi traiter aux États-Unis. Les noms et catégories partagés sont conservés tant qu’ils sont utiles aux autres.",
     ],
+    household: [
+      "Partager avec votre foyer",
+      "À partir de la version 1.3, vous pouvez partager FridgeBuddy avec les personnes avec qui vous vivez, jusqu’à six (créer un foyer nécessite Premium, le rejoindre non). Dans un foyer, ce qui n’est sinon que sur votre téléphone est aussi conservé par le service de FridgeBuddy, pour que tous les téléphones du foyer affichent la même chose : les produits avec leurs dates, quantités, catégories et s’ils sont ouverts ou congelés, la liste de courses, l’historique de ce qui a été mangé et jeté, et les catégories et types de date que l’application retient pour les noms de produits. Les noms que vous avez donnés aux codes-barres scannés ne sont pas partagés. Chaque modification est conservée avec l’identifiant aléatoire du téléphone qui l’a faite et l’heure.",
+      "Les autres membres du foyer voient le nom que vous vous y donnez, et si vous avez Premium (seule une personne avec Premium peut en devenir propriétaire). Seuls les membres du foyer peuvent lire ses données. Une invitation est un code de six caractères qui permet à quiconque l’a de rejoindre le foyer, pendant 48 heures au plus. Elle est conservée avec le foyer concerné, l’identifiant aléatoire de la personne qui l’a créée et sa date d’expiration, puis supprimée.",
+      "Ces données sont stockées chez Google Firebase dans l’UE, comme les noms partagés, tant que le foyer existe. Si vous quittez le foyer, ou si le propriétaire vous retire, votre nom y est supprimé ; ce que vous avez ajouté reste chez les autres, et votre téléphone garde sa propre copie. Quand le propriétaire supprime le foyer, toutes ses données sont supprimées des serveurs.",
+    ],
     purchases: [
       "Achats et notes",
       "FridgeBuddy Premium est un achat unique via Google Play, qui gère le paiement ; nous ne voyons jamais vos données de carte. L’application reçoit seulement la confirmation de Google Play qui débloque Premium. Depuis la version 1.2, l’application demande de temps en temps à Google Play d’afficher sa propre fenêtre de notation. Si vous y notez FridgeBuddy, Google Play s’en charge ; l’application ne sait jamais si ni comment vous l’avez notée.",
@@ -405,7 +433,7 @@ const TEXT: Record<Lang, PolicyText> = {
       "Qui nous aide à faire fonctionner l’application",
       ["Entreprise", "Ce qu’elle fait pour nous", "Où"],
       [
-        ["Google (Firebase)", "Stocke les noms et catégories partagés et gère la connexion anonyme", "UE ; la connexion aussi aux États-Unis"],
+        ["Google (Firebase)", "Stocke les noms et catégories partagés et les foyers partagés, et gère la connexion anonyme", "UE ; la connexion aussi aux États-Unis"],
         ["Google (services Google Play, ML Kit, Google Play)", "Lecture des codes-barres et du texte sur le téléphone, achats et notes", "Les règles de confidentialité de Google s’appliquent"],
         ["Open Food Facts", "Noms de produits à partir des codes-barres", "France"],
       ],
@@ -422,7 +450,7 @@ const TEXT: Record<Lang, PolicyText> = {
     ],
     legal: [
       "Bases juridiques (RGPD)",
-      "La recherche de noms et les achats sont nécessaires pour vous fournir ce que vous avez demandé (contrat). Le partage de noms et de catégories repose sur votre consentement, que vous pouvez retirer dans les Paramètres.",
+      "La recherche de noms, les achats et le partage avec votre foyer sont nécessaires pour vous fournir ce que vous avez demandé (contrat). Le partage de noms et de catégories avec tous les utilisateurs repose sur votre consentement, que vous pouvez retirer dans les Paramètres.",
     ],
     children: ["Enfants", "FridgeBuddy ne s’adresse pas aux enfants de moins de 13 ans."],
     rights: [
@@ -435,6 +463,7 @@ const TEXT: Record<Lang, PolicyText> = {
           Nous ne savons pas qui vous êtes : sans lui, nous ne pouvons pas savoir ce qui vient de
           vous.
         </>,
+        "Votre foyer : quittez-le dans l’application, ce qui y supprime votre nom, ou, en tant que propriétaire, supprimez-le, ce qui supprime toutes ses données.",
         "Réclamations : l’autorité suédoise de protection des données, IMY (imy.se), ou celle de votre pays (en France, la CNIL).",
       ],
     ],
@@ -444,11 +473,11 @@ const TEXT: Record<Lang, PolicyText> = {
   es: {
     title: "Política de privacidad de FridgeBuddy",
     description:
-      "FridgeBuddy no tiene cuentas, ni anuncios, ni seguimiento. Lo que hay en tu nevera se queda en tu teléfono.",
+      "FridgeBuddy no tiene cuentas, ni anuncios, ni seguimiento. Lo que hay en tu nevera se queda en tu teléfono, salvo que lo compartas con tu hogar.",
     languages: "Idioma",
     byline: "FridgeBuddy · Una app de Triple7 Studios, publicada por Bluedeer IT AB",
-    updated: "Última actualización: 26 de noviembre de 2026",
-    lede: "FridgeBuddy no tiene cuentas ni anuncios, y nada te sigue. Lo que hay en tu nevera se queda en tu teléfono. Solo salen de él los números de código de barras, para buscar nombres de productos, y lo que decides compartir con otros usuarios: nombres y categorías.",
+    updated: "Última actualización: 27 de noviembre de 2026",
+    lede: "FridgeBuddy no tiene cuentas ni anuncios, y nada te sigue. Lo que hay en tu nevera se queda en tu teléfono, salvo que lo compartas con tu hogar. Si no, solo salen de él los números de código de barras, para buscar nombres de productos, y lo que decides compartir con otros usuarios: nombres y categorías.",
     who: [
       "Quiénes somos",
       <>
@@ -467,13 +496,12 @@ const TEXT: Record<Lang, PolicyText> = {
         "Los nombres que diste a códigos de barras escaneados, y las categorías y tipos de fecha que elegiste.",
         "Tus ajustes: recordatorios, idioma, tema y si tienes Premium.",
       ],
-      "Nunca recibimos nada de esto. Si la copia de seguridad de Android está activada, Android lo incluye en la copia de tu teléfono en tu cuenta de Google, que controlas en los ajustes del teléfono. Al borrar la app se elimina del teléfono.",
+      "Nunca recibimos nada de esto, salvo que compartas un hogar (ver más abajo). Si la copia de seguridad de Android está activada, Android lo incluye en la copia de tu teléfono en tu cuenta de Google, que controlas en los ajustes del teléfono. Al borrar la app se elimina del teléfono.",
     ],
     camera: [
       "La cámara",
       <>
-        La cámara solo se usa mientras escaneas. Los códigos de barras, las fechas y los nombres de
-        productos se leen en tu teléfono con Google ML Kit; las imágenes nunca se guardan ni se
+        La cámara solo se usa mientras escaneas. Los códigos de barras, las fechas, los nombres de productos y (desde la versión 1.3) los códigos QR de las invitaciones al hogar se leen en tu teléfono con Google ML Kit; las imágenes nunca se guardan ni se
         envían. (La versión 1.0 leía los códigos de barras con el escáner de códigos de los
         servicios de Google Play, que solo daba a la app el número.) Los servicios de Google Play y
         ML Kit pueden enviar a Google datos técnicos anónimos, como el modelo del teléfono, la
@@ -496,6 +524,12 @@ const TEXT: Record<Lang, PolicyText> = {
       "Compartir está desactivado hasta que aceptes, la primera vez que sería útil. Después, cuando guardas un producto escaneado, se almacenan el código de barras, el identificador aleatorio y la hora, junto con el nombre que le diste si Open Food Facts no lo conoce, y (desde la versión 1.1) la categoría que elegiste y si tiene fecha de caducidad. Otros solo ven un nombre o una categoría cuando dos usuarios coinciden o lo hemos aprobado. Los códigos de barras que solo valen en una tienda, como los de productos pesados, nunca se comparten. Un aviso de «Nombre incorrecto» envía el código de barras, el nombre mostrado, el identificador aleatorio y la hora. Puedes dejar de compartir cuando quieras en Ajustes → Escaneo.",
       "Estos datos se almacenan en Google Firebase, en servidores de la UE (Bélgica y Países Bajos). El inicio de sesión anónimo lo gestiona Firebase Authentication, que Google también puede tratar en Estados Unidos. Los nombres y categorías compartidos se conservan mientras sean útiles para otros.",
     ],
+    household: [
+      "Compartir con tu hogar",
+      "Desde la versión 1.3 puedes compartir FridgeBuddy con quienes vives, hasta seis personas (crear un hogar requiere Premium; unirse, no). En un hogar, lo que de otro modo solo está en tu teléfono también se guarda en el servicio de FridgeBuddy, para que todos los teléfonos del hogar muestren lo mismo: los productos con sus fechas, cantidades, categorías y si están abiertos o congelados, la lista de la compra, el historial de lo que se ha comido y tirado, y las categorías y tipos de fecha que la app recuerda para los nombres de productos. Los nombres que diste a códigos de barras escaneados no se comparten. Cada cambio se guarda con el identificador aleatorio del teléfono que lo hizo y la hora.",
+      "Los demás del hogar ven el nombre que te pones allí y si tienes Premium (solo alguien con Premium puede pasar a ser propietario). Solo los miembros del hogar pueden leer sus datos. Una invitación es un código de seis caracteres que permite unirse a quien lo tenga, durante 48 horas como máximo. Se guarda con el hogar al que corresponde, el identificador aleatorio de quien la creó y cuándo caduca, y después se borra.",
+      "Estos datos se guardan en Google Firebase en la UE, como los nombres compartidos, mientras exista el hogar. Si sales del hogar, o el propietario te saca, tu nombre se borra de él; lo que añadiste se queda con los demás, y tu teléfono conserva su propia copia. Cuando el propietario elimina el hogar, todos sus datos se borran de los servidores.",
+    ],
     purchases: [
       "Compras y valoraciones",
       "FridgeBuddy Premium es una compra única a través de Google Play, que gestiona el pago; nunca vemos los datos de tu tarjeta. La app solo recibe la confirmación de Google Play que desbloquea Premium. Desde la versión 1.2, la app pide de vez en cuando a Google Play que muestre su propia ventana de valoración. Si valoras FridgeBuddy ahí, lo gestiona Google Play; la app nunca sabe si la has valorado ni cómo.",
@@ -504,7 +538,7 @@ const TEXT: Record<Lang, PolicyText> = {
       "Quién nos ayuda a hacer funcionar la app",
       ["Empresa", "Qué hace por nosotros", "Dónde"],
       [
-        ["Google (Firebase)", "Guarda los nombres y categorías compartidos y gestiona el inicio de sesión anónimo", "UE; el inicio de sesión también EE. UU."],
+        ["Google (Firebase)", "Guarda los nombres y categorías compartidos y los hogares compartidos, y gestiona el inicio de sesión anónimo", "UE; el inicio de sesión también EE. UU."],
         ["Google (servicios de Google Play, ML Kit, Google Play)", "Lectura de códigos de barras y texto en el teléfono, compras y valoraciones", "Se aplica la política de privacidad de Google"],
         ["Open Food Facts", "Nombres de productos a partir de códigos de barras", "Francia"],
       ],
@@ -521,7 +555,7 @@ const TEXT: Record<Lang, PolicyText> = {
     ],
     legal: [
       "Bases legales (RGPD)",
-      "Buscar nombres y las compras son necesarios para darte lo que pides (contrato). Compartir nombres y categorías se basa en tu consentimiento, que puedes retirar en Ajustes.",
+      "Buscar nombres, las compras y compartir con tu hogar son necesarios para darte lo que pides (contrato). Compartir nombres y categorías con todos los usuarios se basa en tu consentimiento, que puedes retirar en Ajustes.",
     ],
     children: ["Menores", "FridgeBuddy no está dirigida a menores de 13 años."],
     rights: [
@@ -533,6 +567,7 @@ const TEXT: Record<Lang, PolicyText> = {
           Los nombres y categorías que compartiste: escribe a <Email /> con el código de barras. No
           sabemos quién eres, así que sin él no podemos saber qué es tuyo.
         </>,
+        "Tu hogar: sal de él en la app, y tu nombre se borra de él, o elimínalo como propietario, y se borran todos sus datos.",
         "Reclamaciones: la autoridad sueca de protección de datos, IMY (imy.se), o la de tu país (en España, la AEPD).",
       ],
     ],
@@ -542,11 +577,11 @@ const TEXT: Record<Lang, PolicyText> = {
   da: {
     title: "Privatlivspolitik for FridgeBuddy",
     description:
-      "FridgeBuddy har ingen konti, ingen reklamer og ingen sporing. Det, der er i dit køleskab, bliver på din telefon.",
+      "FridgeBuddy har ingen konti, ingen reklamer og ingen sporing. Det, der er i dit køleskab, bliver på din telefon, medmindre du deler det med din husstand.",
     languages: "Sprog",
     byline: "FridgeBuddy · En app fra Triple7 Studios, udgivet af Bluedeer IT AB",
-    updated: "Sidst opdateret: 26. november 2026",
-    lede: "FridgeBuddy har ingen konti og ingen reklamer, og intet sporer dig. Det, der er i dit køleskab, bliver på din telefon. Kun stregkodenumre forlader den, for at finde varenavne, og det, du vælger at dele med andre brugere: navne og kategorier.",
+    updated: "Sidst opdateret: 27. november 2026",
+    lede: "FridgeBuddy har ingen konti og ingen reklamer, og intet sporer dig. Det, der er i dit køleskab, bliver på din telefon, medmindre du deler det med din husstand. Ellers forlader kun stregkodenumre den, for at finde varenavne, og det, du vælger at dele med andre brugere: navne og kategorier.",
     who: [
       "Hvem vi er",
       <>
@@ -565,13 +600,12 @@ const TEXT: Record<Lang, PolicyText> = {
         "De navne, du har givet scannede stregkoder, og de kategorier og datotyper, du har valgt.",
         "Dine indstillinger: påmindelser, sprog, tema, og om du har Premium.",
       ],
-      "Vi modtager aldrig noget af det. Hvis Android-backup er slået til, tager Android det med i telefonens backup til din Google-konto, som du styrer i telefonens indstillinger. Når du sletter appen, slettes det fra telefonen.",
+      "Vi modtager aldrig noget af det, medmindre du deler en husstand (se nedenfor). Hvis Android-backup er slået til, tager Android det med i telefonens backup til din Google-konto, som du styrer i telefonens indstillinger. Når du sletter appen, slettes det fra telefonen.",
     ],
     camera: [
       "Kameraet",
       <>
-        Kameraet bruges kun, mens du scanner. Stregkoder, bedst før-datoer og varenavne læses på din
-        telefon med Google ML Kit, og billederne gemmes eller sendes aldrig. (Version 1.0 læste
+        Kameraet bruges kun, mens du scanner. Stregkoder, bedst før-datoer, varenavne og (fra version 1.3) QR-koder til husstandsinvitationer læses på din telefon med Google ML Kit, og billederne gemmes eller sendes aldrig. (Version 1.0 læste
         stregkoder med kodescanneren i Google Play-tjenester, som kun gav appen stregkodenummeret.)
         Google Play-tjenester og ML Kit kan sende anonyme tekniske data til Google, fx telefonmodel,
         appversion og ydelsestal, for at fungere; se{" "}
@@ -592,6 +626,12 @@ const TEXT: Record<Lang, PolicyText> = {
       "Deling er slået fra, indtil du siger ja – første gang det ville hjælpe. Derefter opbevares, når du gemmer en scannet vare, stregkoden, det tilfældige id og tidspunktet sammen med navnet, du gav varen, hvis Open Food Facts ikke kender den, og (fra version 1.1) den kategori, du valgte, og om den har sidste anvendelsesdato. Andre ser først et navn eller en kategori, når to brugere er enige om det, eller vi har godkendt det. Stregkoder, der kun gælder i én butik, fx på vejede varer, deles aldrig. En rapport om forkert navn sender stregkoden, det viste navn, det tilfældige id og tidspunktet. Du kan til enhver tid stoppe med at dele under Indstillinger → Scanning.",
       "Disse data opbevares hos Google Firebase på servere i EU (Belgien og Holland). Det anonyme login håndteres af Firebase Authentication, som Google også kan behandle i USA. Delte navne og kategorier gemmes, så længe de er til nytte for andre.",
     ],
+    household: [
+      "Deling med din husstand",
+      "Fra version 1.3 kan du dele FridgeBuddy med dem, du bor med, op til seks personer (det kræver Premium at oprette en husstand, men ikke at deltage). I en husstand gemmes det, der ellers kun er på din telefon, også hos FridgeBuddys tjeneste, så alle telefoner i husstanden viser det samme: varerne med datoer, antal, kategori, og om de er åbnet eller frosset, indkøbslisten, historikken over, hvad der er spist og smidt ud, og de kategorier og datotyper, appen husker for varenavne. De navne, du har givet scannede stregkoder, deles ikke. Hver ændring gemmes med det tilfældige id for den telefon, der lavede den, og tidspunktet.",
+      "De andre i husstanden ser det navn, du giver dig selv der, og om du har Premium (kun en med Premium kan overtage som ejer). Kun husstandens medlemmer kan læse dens data. En invitation er en kode på seks tegn, som lader enhver, der har den, deltage i højst 48 timer. Den gemmes med den husstand, den gælder, det tilfældige id for den, der oprettede den, og hvornår den udløber, og slettes derefter.",
+      "Disse data opbevares hos Google Firebase i EU ligesom de delte navne, så længe husstanden findes. Når du forlader husstanden, eller ejeren fjerner dig, slettes dit navn der; det, du har tilføjet, bliver hos de andre, og din telefon beholder sin egen kopi. Når ejeren sletter husstanden, slettes alle dens data fra serverne.",
+    ],
     purchases: [
       "Køb og bedømmelser",
       "FridgeBuddy Premium er et engangskøb via Google Play, som står for betalingen; vi ser aldrig dine kortoplysninger. Appen får kun Google Plays bekræftelse, som låser Premium op. Fra version 1.2 beder appen af og til Google Play om at vise sit eget bedømmelsesvindue. Bedømmer du FridgeBuddy der, står Google Play for det; appen får aldrig at vide, om eller hvordan du har bedømt den.",
@@ -600,7 +640,7 @@ const TEXT: Record<Lang, PolicyText> = {
       "Hvem hjælper os med at drive appen",
       ["Virksomhed", "Hvad de gør for os", "Hvor"],
       [
-        ["Google (Firebase)", "Gemmer delte navne og kategorier og håndterer det anonyme login", "EU; login også USA"],
+        ["Google (Firebase)", "Gemmer delte navne og kategorier og delte husstande og håndterer det anonyme login", "EU; login også USA"],
         ["Google (Play-tjenester, ML Kit, Google Play)", "Læser stregkoder og tekst på telefonen, køb og bedømmelser", "Googles egen privatlivspolitik gælder"],
         ["Open Food Facts", "Varenavne ud fra stregkoder", "Frankrig"],
       ],
@@ -617,7 +657,7 @@ const TEXT: Record<Lang, PolicyText> = {
     ],
     legal: [
       "Retsgrundlag (GDPR)",
-      "Opslag af navne og køb er nødvendige for at give dig det, du har bedt om (aftale). Deling af navne og kategorier bygger på dit samtykke, som du kan trække tilbage i Indstillinger.",
+      "Opslag af navne, køb og deling med din husstand er nødvendige for at give dig det, du har bedt om (aftale). Deling af navne og kategorier med alle brugere bygger på dit samtykke, som du kan trække tilbage i Indstillinger.",
     ],
     children: ["Børn", "FridgeBuddy er ikke rettet mod børn under 13 år."],
     rights: [
@@ -629,6 +669,7 @@ const TEXT: Record<Lang, PolicyText> = {
           Navne og kategorier, du har delt: skriv til <Email /> med stregkoden. Vi ved ikke, hvem du
           er, så uden den kan vi ikke se, hvad der er dit.
         </>,
+        "Din husstand: forlad den i appen, så slettes dit navn der, eller slet den som ejer, så slettes alle dens data.",
         "Klager: den svenske databeskyttelsesmyndighed IMY (imy.se) eller myndigheden, hvor du bor (i Danmark Datatilsynet).",
       ],
     ],
@@ -638,11 +679,11 @@ const TEXT: Record<Lang, PolicyText> = {
   nb: {
     title: "Personvernerklæring for FridgeBuddy",
     description:
-      "FridgeBuddy har ingen kontoer, ingen reklame og ingen sporing. Det som er i kjøleskapet ditt, blir på telefonen din.",
+      "FridgeBuddy har ingen kontoer, ingen reklame og ingen sporing. Det som er i kjøleskapet ditt, blir på telefonen din, med mindre du deler det med husstanden din.",
     languages: "Språk",
     byline: "FridgeBuddy · En app fra Triple7 Studios, utgitt av Bluedeer IT AB",
-    updated: "Sist oppdatert: 26. november 2026",
-    lede: "FridgeBuddy har ingen kontoer og ingen reklame, og ingenting sporer deg. Det som er i kjøleskapet ditt, blir på telefonen din. Bare strekkodenumre forlater den, for å finne varenavn, og det du velger å dele med andre brukere: navn og kategorier.",
+    updated: "Sist oppdatert: 27. november 2026",
+    lede: "FridgeBuddy har ingen kontoer og ingen reklame, og ingenting sporer deg. Det som er i kjøleskapet ditt, blir på telefonen din, med mindre du deler det med husstanden din. Ellers forlater bare strekkodenumre den, for å finne varenavn, og det du velger å dele med andre brukere: navn og kategorier.",
     who: [
       "Hvem vi er",
       <>
@@ -661,13 +702,12 @@ const TEXT: Record<Lang, PolicyText> = {
         "Navnene du har gitt skannede strekkoder, og kategoriene og datotypene du har valgt.",
         "Innstillingene dine: påminnelser, språk, tema og om du har Premium.",
       ],
-      "Vi mottar aldri noe av dette. Hvis Android-sikkerhetskopiering er slått på, tar Android det med i telefonens sikkerhetskopi til Google-kontoen din, som du styrer i telefonens innstillinger. Når du sletter appen, slettes det fra telefonen.",
+      "Vi mottar aldri noe av dette, med mindre du deler en husstand (se nedenfor). Hvis Android-sikkerhetskopiering er slått på, tar Android det med i telefonens sikkerhetskopi til Google-kontoen din, som du styrer i telefonens innstillinger. Når du sletter appen, slettes det fra telefonen.",
     ],
     camera: [
       "Kameraet",
       <>
-        Kameraet brukes bare mens du skanner. Strekkoder, best før-datoer og varenavn leses på
-        telefonen din med Google ML Kit, og bildene lagres eller sendes aldri. (Versjon 1.0 leste
+        Kameraet brukes bare mens du skanner. Strekkoder, best før-datoer, varenavn og (fra versjon 1.3) QR-koder for husstandsinvitasjoner leses på telefonen din med Google ML Kit, og bildene lagres eller sendes aldri. (Versjon 1.0 leste
         strekkoder med kodeskanneren i Google Play-tjenester, som bare ga appen strekkodenummeret.)
         Google Play-tjenester og ML Kit kan sende anonyme tekniske data til Google, for eksempel
         telefonmodell, appversjon og ytelsestall, for å fungere; se{" "}
@@ -688,6 +728,12 @@ const TEXT: Record<Lang, PolicyText> = {
       "Deling er slått av til du sier ja – første gang det ville hjelpe. Deretter lagres, når du legger til en skannet vare, strekkoden, den tilfeldige ID-en og tidspunktet, sammen med navnet du ga varen hvis Open Food Facts ikke kjenner den, og (fra versjon 1.1) kategorien du valgte og om den har siste forbruksdag. Andre ser et navn eller en kategori først når to brukere er enige om det, eller vi har godkjent det. Strekkoder som bare gjelder i én butikk, for eksempel på veide varer, deles aldri. En rapport om feil navn sender strekkoden, navnet som ble vist, den tilfeldige ID-en og tidspunktet. Du kan når som helst slutte å dele under Innstillinger → Skanning.",
       "Disse dataene lagres hos Google Firebase på servere i EU (Belgia og Nederland). Den anonyme innloggingen håndteres av Firebase Authentication, som Google også kan behandle i USA. Delte navn og kategorier lagres så lenge de er til nytte for andre.",
     ],
+    household: [
+      "Deling med husstanden din",
+      "Fra versjon 1.3 kan du dele FridgeBuddy med dem du bor med, opptil seks personer (det krever Premium å opprette en husstand, men ikke å bli med). I en husstand lagres det som ellers bare er på telefonen din, også hos FridgeBuddys tjeneste, slik at alle telefonene i husstanden viser det samme: varene med datoer, antall, kategori og om de er åpnet eller fryst, handlelisten, historikken over hva som er spist og kastet, og kategoriene og datotypene appen husker for varenavn. Navnene du har gitt skannede strekkoder, deles ikke. Hver endring lagres med den tilfeldige ID-en til telefonen som gjorde den, og tidspunktet.",
+      "De andre i husstanden ser navnet du gir deg selv der, og om du har Premium (bare noen med Premium kan ta over som eier). Bare husstandens medlemmer kan lese dataene dens. En invitasjon er en kode på seks tegn som lar alle som har den, bli med i høyst 48 timer. Den lagres med husstanden den gjelder, den tilfeldige ID-en til den som opprettet den, og når den utløper, og slettes deretter.",
+      "Disse dataene lagres hos Google Firebase i EU, som de delte navnene, så lenge husstanden finnes. Når du forlater husstanden, eller eieren fjerner deg, slettes navnet ditt der; det du har lagt til, blir igjen hos de andre, og telefonen din beholder sin egen kopi. Når eieren sletter husstanden, slettes alle dataene dens fra serverne.",
+    ],
     purchases: [
       "Kjøp og vurderinger",
       "FridgeBuddy Premium er et engangskjøp via Google Play, som håndterer betalingen; vi ser aldri kortopplysningene dine. Appen får bare Google Plays bekreftelse som låser opp Premium. Fra versjon 1.2 ber appen av og til Google Play om å vise sitt eget vurderingsvindu. Vurderer du FridgeBuddy der, håndterer Google Play det; appen får aldri vite om eller hvordan du har vurdert den.",
@@ -696,7 +742,7 @@ const TEXT: Record<Lang, PolicyText> = {
       "Hvem som hjelper oss å drive appen",
       ["Selskap", "Hva de gjør for oss", "Hvor"],
       [
-        ["Google (Firebase)", "Lagrer delte navn og kategorier og håndterer den anonyme innloggingen", "EU; innloggingen også USA"],
+        ["Google (Firebase)", "Lagrer delte navn og kategorier og delte husstander, og håndterer den anonyme innloggingen", "EU; innloggingen også USA"],
         ["Google (Play-tjenester, ML Kit, Google Play)", "Leser strekkoder og tekst på telefonen, kjøp og vurderinger", "Googles egne personvernregler gjelder"],
         ["Open Food Facts", "Varenavn ut fra strekkoder", "Frankrike"],
       ],
@@ -713,7 +759,7 @@ const TEXT: Record<Lang, PolicyText> = {
     ],
     legal: [
       "Rettslig grunnlag (GDPR)",
-      "Oppslag av navn og kjøp er nødvendige for å gi deg det du har bedt om (avtale). Deling av navn og kategorier bygger på samtykket ditt, som du kan trekke tilbake i Innstillinger.",
+      "Oppslag av navn, kjøp og deling med husstanden din er nødvendige for å gi deg det du har bedt om (avtale). Deling av navn og kategorier med alle brukere bygger på samtykket ditt, som du kan trekke tilbake i Innstillinger.",
     ],
     children: ["Barn", "FridgeBuddy er ikke rettet mot barn under 13 år."],
     rights: [
@@ -725,6 +771,7 @@ const TEXT: Record<Lang, PolicyText> = {
           Navn og kategorier du har delt: skriv til <Email /> med strekkoden. Vi vet ikke hvem du
           er, så uten den kan vi ikke se hva som er ditt.
         </>,
+        "Husstanden din: forlat den i appen, så slettes navnet ditt der, eller slett den som eier, så slettes alle dataene dens.",
         "Klager: den svenske tilsynsmyndigheten IMY (imy.se) eller myndigheten der du bor (i Norge Datatilsynet).",
       ],
     ],
@@ -764,6 +811,11 @@ function Body({ t }: { t: PolicyText }) {
       <p>{t.shared[1]}</p>
       <p>{t.shared[2]}</p>
       <p>{t.shared[3]}</p>
+
+      <h2>{t.household[0]}</h2>
+      <p>{t.household[1]}</p>
+      <p>{t.household[2]}</p>
+      <p>{t.household[3]}</p>
 
       <h2>{t.purchases[0]}</h2>
       <p>{t.purchases[1]}</p>
